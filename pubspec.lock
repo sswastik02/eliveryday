@@ -157,12 +157,19 @@ packages:
     source: hosted
     version: "3.0.0"
   mapbox_search:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: mapbox_search
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0+1"
+  mapbox_search_flutter:
+    dependency: "direct main"
+    description:
+      name: mapbox_search_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.6+1"
   matcher:
     dependency: transitive
     description:
