@@ -14,29 +14,33 @@ class _HomeRouteState extends State<HomeRoute> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: Row(
-          children: [
-            SizedBox(
-              width: 3,
-            ),
-            Icon(
-              Icons.menu,
-              size: 30,
-            ),
-            SizedBox(
-              width: 5,
-            ),
-            // Sized Box can be used for spaces
-            Text(
-              "Eliveryday",
-              style: TextStyle(fontSize: 16),
-            )
-          ],
-        ),
-        leadingWidth: 190,
-        actions: [addressLocator(context)],
+      appBar: customAppBar(),
+    );
+  }
+
+  AppBar customAppBar() {
+    return AppBar(
+      leading: Row(
+        children: [
+          SizedBox(
+            width: 3,
+          ),
+          Icon(
+            Icons.menu,
+            size: 30,
+          ),
+          SizedBox(
+            width: 5,
+          ),
+          // Sized Box can be used for spaces
+          Text(
+            "Eliveryday",
+            style: TextStyle(fontSize: 16),
+          )
+        ],
       ),
+      leadingWidth: 190,
+      actions: [addressLocator(context)],
     );
   }
 
