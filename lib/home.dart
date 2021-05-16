@@ -1,4 +1,8 @@
-import 'package:eliveryday/maps/maps.dart';
+import 'package:eliveryday/Resturant/FoodCard.dart';
+import 'package:eliveryday/Resturant/resturantCard.dart';
+import 'package:eliveryday/Resturant/resturantInfo.dart';
+import 'package:eliveryday/Resturant/resturantView.dart';
+import 'package:eliveryday/Maps/maps.dart';
 import 'package:flutter/material.dart';
 
 // routes are used to navigate between pages
@@ -15,6 +19,15 @@ class _HomeRouteState extends State<HomeRoute> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar(),
+      body: Column(
+        children: resturanAllInfo.map((resturant) {
+          return resturantCard(
+            resturant[0],
+            resturantTitle: resturant[1],
+            image: resturant[2],
+          );
+        }).toList(),
+      ),
     );
   }
 
@@ -26,8 +39,8 @@ class _HomeRouteState extends State<HomeRoute> {
             width: 3,
           ),
           Icon(
-            Icons.menu,
-            size: 30,
+            Icons.delivery_dining,
+            size: 40,
           ),
           SizedBox(
             width: 5,
@@ -35,7 +48,7 @@ class _HomeRouteState extends State<HomeRoute> {
           // Sized Box can be used for spaces
           Text(
             "Eliveryday",
-            style: TextStyle(fontSize: 16),
+            style: TextStyle(fontSize: 17),
           )
         ],
       ),
@@ -76,6 +89,8 @@ class _HomeRouteState extends State<HomeRoute> {
             } else {
               if (previousAddress == "") {
                 address = "Select Location";
+                // If no previous address was assigned then set adderess as "Select Location"
+                // Otherwise let it reamain previous address
               }
             }
           });
