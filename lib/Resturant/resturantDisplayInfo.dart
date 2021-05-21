@@ -43,6 +43,7 @@ Widget photoAndTitle(String photo, String title, String imagesPath) {
 
 Widget foodList(List<Food> foods) {
   return SingleChildScrollView(
+    padding: EdgeInsets.only(bottom: 20),
     child: Column(
         children: foods.map((foodData) => FoodCardTemplate(foodData)).toList()),
   );

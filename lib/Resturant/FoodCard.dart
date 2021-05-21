@@ -1,3 +1,4 @@
+import 'package:eliveryday/Cart/cartInfo.dart';
 import 'package:flutter/material.dart';
 
 class Food {
@@ -7,6 +8,7 @@ class Food {
   final String image;
   final String description;
   final bool veg;
+  int quantity;
   Food({
     this.foodItemName = "Unknown",
     this.veg = true,
@@ -14,16 +16,21 @@ class Food {
     this.image = "defaultFood.jpeg",
     this.pricePerMeasure = 10.0,
     this.description = "Coming soon ..........",
+    this.quantity = 0,
   });
 }
 
-class FoodCardTemplate extends StatelessWidget {
+class FoodCardTemplate extends StatefulWidget {
   // This Widget Creates a Card with the following parameters
   Food foodData;
   final String imagesPath = "lib/Resturant/resturantImages/";
 
   FoodCardTemplate(this.foodData);
+  @override
+  FoodCardTemplateState createState() => FoodCardTemplateState();
+}
 
+class FoodCardTemplateState extends State<FoodCardTemplate> {
   Widget vegOrNonVeg({veg = true}) {
     var color;
     if (veg == true) {
@@ -58,18 +65,19 @@ class FoodCardTemplate extends StatelessWidget {
         children: [
           // Food Image
           Image.asset(
-            imagesPath + foodData.image,
+            widget.imagesPath + widget.foodData.image,
             height: 250,
             // Aspect Ratio is maintained
           ),
           Positioned(
+            //NAME
             left: 20,
             top: 30,
-            width: MediaQuery.of(context).size.width * 0.6,
+            width: MediaQuery.of(context).size.width * 0.7,
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Text(
-                foodData.foodItemName,
+                widget.foodData.foodItemName,
                 style: TextStyle(
                     backgroundColor: Colors.amber,
                     color: Colors.red.shade900,
@@ -80,6 +88,7 @@ class FoodCardTemplate extends StatelessWidget {
             ),
           ),
           Positioned(
+            // DESCRIPTION
             top: 70,
             left: 20,
             width: MediaQuery.of(context).size.width * 0.7,
@@ -88,7 +97,7 @@ class FoodCardTemplate extends StatelessWidget {
             child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: Text(
-                foodData.description,
+                widget.foodData.description,
                 style: TextStyle(
                   backgroundColor: Colors.black,
                   color: Colors.white,
@@ -99,20 +108,143 @@ class FoodCardTemplate extends StatelessWidget {
             ),
           ),
           Positioned(
+            //VEGNONVEG
             top: 5,
             right: 10,
-            child: vegOrNonVeg(veg: foodData.veg),
+            child: vegOrNonVeg(veg: widget.foodData.veg),
           ),
           Positioned(
-            top: 260,
+            //PRICE
+            bottom: 15,
             left: 10,
-            child: foodData.measureByPieces
+            child: widget.foodData.measureByPieces
                 ? Text(
-                    '\u{20B9} ${foodData.pricePerMeasure} / Piece',
-                    style:
-                        TextStyle(fontFamily: "Times New Roman", fontSize: 15),
+                    '\u{20B9} ${widget.foodData.pricePerMeasure} / Piece',
+                    style: TextStyle(
+                      fontFamily: "Times New Roman",
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
                   )
-                : Text('\u{20B9} ${foodData.pricePerMeasure} / Bowl'),
+                : Text(
+                    '\u{20B9} ${widget.foodData.pricePerMeasure} / Bowl',
+                    style: TextStyle(
+                      fontFamily: "Times New Roman",
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+          ),
+          Positioned(
+            // BUTTON
+            bottom: 1,
+            right: 5,
+            child: (widget.foodData.quantity == 0)
+                ? _buttonNoCount()
+                : _buttonCount(),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _buttonNoCount() {
+    return MaterialButton(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(20),
+        ),
+      ),
+      onPressed: (widget.foodData.foodItemName == "Unknown")
+          ? null
+          : () {
+              setState(() {
+                print(cartAllInfo.remove(widget.foodData));
+                // remove if exists
+                widget.foodData.quantity++;
+                // adding to cart
+                cartAllInfo.add(widget.foodData);
+
+                print(cartAllInfo.length);
+              });
+            },
+      color: Theme.of(context).primaryColor,
+      disabledColor: Colors.grey,
+      child: Row(
+        children: [
+          Icon(
+            Icons.add_circle_outline,
+            color: Colors.white,
+          ),
+          SizedBox(
+            width: 5,
+          ),
+          Text(
+            "Add Item",
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buttonCount() {
+    return Container(
+      child: Row(
+        children: [
+          MaterialButton(
+            shape: CircleBorder(),
+            minWidth: 15,
+            color: Theme.of(context).primaryColor,
+            onPressed: () {
+              setState(() {
+                print(cartAllInfo.remove(widget.foodData));
+                // remove if exists
+                widget.foodData.quantity--;
+                // adding to cart
+                if (widget.foodData.quantity > 0) {
+                  cartAllInfo.add(widget.foodData);
+                }
+
+                print(cartAllInfo.length);
+              });
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(
+                Icons.remove,
+                size: 20,
+              ),
+            ),
+          ),
+          Text(
+            "${widget.foodData.quantity}",
+            style: TextStyle(fontSize: 20),
+          ),
+          MaterialButton(
+            shape: CircleBorder(),
+            color: Theme.of(context).primaryColor,
+            minWidth: 15,
+            onPressed: () {
+              setState(() {
+                print(cartAllInfo.remove(widget.foodData));
+                // remove if exists
+                widget.foodData.quantity++;
+                // adding to cart
+                cartAllInfo.add(widget.foodData);
+
+                print(cartAllInfo.length);
+              });
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(
+                Icons.add,
+                size: 20,
+              ),
+            ),
           ),
         ],
       ),

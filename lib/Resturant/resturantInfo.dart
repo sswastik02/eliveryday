@@ -4,7 +4,7 @@ List resturanAllInfo = [
   [
     [
       Food(
-        foodItemName: "Biryani",
+        foodItemName: "Chicken Biryani",
         description: "Traditional Chicken Biryani 6 pieces + Raita",
         veg: false,
         measureByPieces: false,
@@ -34,5 +34,25 @@ List resturanAllInfo = [
     ],
     "PortSide Grill- Taste of the Sea",
     "Port.jpg"
+  ],
+  [
+    [Food()],
+    "",
+    ""
+  ],
+  [
+    [Food()],
+    "",
+    ""
+  ],
+  [
+    [Food()],
+    "",
+    ""
+  ],
+  [
+    [Food()],
+    "",
+    ""
   ]
 ];

@@ -1,21 +1,25 @@
 import 'package:eliveryday/Resturant/resturantDisplayInfo.dart';
+
 import 'package:flutter/material.dart';
 
 import 'FoodCard.dart';
-import 'resturantView.dart';
+import 'singleResturantView.dart';
 
-class resturantCard extends StatelessWidget {
+class ResturantCard extends StatelessWidget {
   String resturantTitle;
   String image;
   List<Food> foodItems;
-  resturantCard(this.foodItems,
+  ResturantCard(this.foodItems,
       {this.resturantTitle = "Resturant", this.image = "defaultResturant.jpg"});
   final String imagesPath = "lib/Resturant/resturantImages/";
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      child: photoAndTitle(image, resturantTitle, imagesPath),
+      child: Container(
+        margin: EdgeInsets.only(bottom: 10),
+        child: photoAndTitle(image, resturantTitle, imagesPath),
+      ),
       onTap: () {
         Navigator.push(
           context,

@@ -1,0 +1,13 @@
+https://willowtreeapps.com/ideas/how-to-use-flutter-to-build-an-app-with-bottom-navigation
+
+https://pub.dev/packages/mapbox_search
+
+https://www.youtube.com/watch?v=bh_G5mgQFT8
+
+https://pub.dev/packages/google_maps_flutter/example
+
+https://pub.dev/packages/location
+
+https://pub.dev/packages/geocoding/install
+
+https://stackoverflow.com/questions/36785014/the-number-of-method-references-in-a-dex-file-cannot-exceed-64k-api-17

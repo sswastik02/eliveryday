@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "644368214139",
+    "project_id": "eliveryday",
+    "storage_bucket": "eliveryday.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:644368214139:android:c782127d4b45da37e35ade",
+        "android_client_info": {
+          "package_name": "com.example.eliveryday"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "644368214139-g1ur1nqoh3cao6tab97dgld5h9fgn1h3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.eliveryday",
+            "certificate_hash": "7f5e48a9197e78b49023ce7f01cfd073e7b3ef4d"
+          }
+        },
+        {
+          "client_id": "644368214139-1d0jhnc157ubfpa4bdcesv286o07864q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPiE0CcOyCht9VqZdhZ4j63B1MslpthoI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "644368214139-1d0jhnc157ubfpa4bdcesv286o07864q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
