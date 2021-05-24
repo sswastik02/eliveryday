@@ -2,6 +2,8 @@
 
 An Android app built using flutter for delivery of food 
 
+# setup
+
 Add the Google API key to local.properties
 
 ```
