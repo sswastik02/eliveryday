@@ -1,9 +1,15 @@
+import 'package:eliveryday/Cart/checkout.dart';
+import 'package:eliveryday/FireBase/firebaseCustomServices.dart';
+import 'package:eliveryday/FireBase/phoneauth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../Resturant/resturantDisplayInfo.dart';
 import '../Cart/cartInfo.dart';
 
 class Cart extends StatefulWidget {
+  final FirebaseAuth _auth;
+  Cart(this._auth);
   CartState createState() => CartState();
 }
 
@@ -23,8 +29,8 @@ class CartState extends State<Cart> {
           children: [
             cartTitle(context),
             cartdisplay(context),
-            refreshButton(),
-            (cartAllInfo.length == 0) ? emptyCart() : checkoutButton(),
+            refreshButton(context),
+            (cartAllInfo.length == 0) ? emptyCart() : checkoutButton(context),
           ],
         ),
       ),
@@ -34,8 +40,8 @@ class CartState extends State<Cart> {
   Widget emptyCart() {
     return Positioned(
       top: MediaQuery.of(context).size.height * 0.3,
-      width: 350,
-      left: MediaQuery.of(context).size.width * 0.5 - 175,
+      left: MediaQuery.of(context).size.width * 0.025,
+      width: MediaQuery.of(context).size.width * 0.95,
       child: Column(
         children: [
           Icon(
@@ -43,11 +49,14 @@ class CartState extends State<Cart> {
             size: 100,
             color: Colors.grey.withOpacity(0.2),
           ),
-          Text(
-            "Your Cart is Empty",
-            style: TextStyle(
-              fontSize: 40,
-              color: Colors.grey.withOpacity(0.2),
+          FittedBox(
+            fit: BoxFit.fitWidth,
+            child: Text(
+              " Your Cart is Empty ",
+              style: TextStyle(
+                fontSize: 40,
+                color: Colors.grey.withOpacity(0.2),
+              ),
             ),
           ),
         ],
@@ -55,37 +64,77 @@ class CartState extends State<Cart> {
     );
   }
 
-  Widget checkoutButton() {
+  Widget checkoutButton(BuildContext context) {
     return Positioned(
-      bottom: 10,
-      width: 150,
-      height: 50,
-      left: MediaQuery.of(context).size.width * 0.5 - 75,
-      child: ElevatedButton.icon(
-        onPressed: () {},
-        icon: Icon(Icons.exit_to_app),
-        label: Text("Checkout"),
+      bottom: 1,
+      width: MediaQuery.of(context).size.width * 0.35,
+      height: MediaQuery.of(context).size.height * 0.07,
+      left: MediaQuery.of(context).size.width * 0.5 -
+          MediaQuery.of(context).size.width * (0.35 / 2),
+      // bringing to centre horizontal
+      child: FittedBox(
+        fit: BoxFit.fitWidth,
+        child: ElevatedButton.icon(
+          onPressed: () async {
+            var res = await checkUserSignedIn(widget._auth);
+
+            if (res == null) {
+              var result = await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      Material(child: Scaffold(body: PhoneAuth(widget._auth))),
+                ),
+              );
+              if (mounted) {
+                setState(() {
+                  print(res);
+                  res = result[0];
+                  print(res);
+                });
+              }
+
+              print("object");
+              print(res);
+            }
+            if (res != null) {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return Scaffold(
+                  body: checkoutPage(context, widget._auth),
+                );
+              }));
+            }
+          },
+          icon: Icon(Icons.exit_to_app),
+          label: Text("Checkout"),
+        ),
       ),
     );
   }
 
-  Widget refreshButton() {
+  Widget refreshButton(BuildContext context) {
     return Positioned(
       top: 7,
-      width: 125,
+      width: MediaQuery.of(context).size.width * 0.3,
       right: 10,
-      height: 40,
-      child: ElevatedButton.icon(
-          onPressed: () {
-            setState(() {
-              cartAllInfo = cartAllInfo;
-              // just a refresh
-            });
-          },
-          icon: Icon(Icons.refresh),
-          label: Text(
-            "Refresh",
-          )),
+      height: MediaQuery.of(context).size.height * 0.05,
+      child: FittedBox(
+        fit: BoxFit.fitWidth,
+        child: ElevatedButton.icon(
+            onPressed: () {
+              setState(() {
+                cartAllInfo = cartAllInfo;
+                // just a refresh
+              });
+            },
+            icon: Icon(Icons.refresh),
+            label: FittedBox(
+              fit: BoxFit.fitWidth,
+              child: Text(
+                "Refresh",
+              ),
+            )),
+      ),
     );
   }
 
@@ -98,12 +147,16 @@ class CartState extends State<Cart> {
         decoration: BoxDecoration(
           border: Border.all(color: Colors.red),
         ),
-        child: Text(
-          " Cart ",
-          style: TextStyle(
-              color: Colors.deepOrange,
-              fontFamily: "Times New Roman",
-              fontSize: 30),
+        width: MediaQuery.of(context).size.width * 0.2,
+        child: FittedBox(
+          fit: BoxFit.fitWidth,
+          child: Text(
+            " Cart ",
+            style: TextStyle(
+                color: Colors.deepOrange,
+                fontFamily: "Times New Roman",
+                fontSize: 30),
+          ),
         ),
       ),
     );
@@ -112,10 +165,13 @@ class CartState extends State<Cart> {
   Widget cartdisplay(BuildContext context) {
     return Positioned(
       left: 10,
-      top: 70,
+      top: MediaQuery.of(context).size.height * 0.07,
       height: MediaQuery.of(context).size.height * 0.62,
       width: MediaQuery.of(context).size.width * 0.93,
-      child: foodList(cartAllInfo),
+      child: Container(
+        margin: EdgeInsets.only(top: 5),
+        child: foodList(cartAllInfo),
+      ),
     );
   }
 }

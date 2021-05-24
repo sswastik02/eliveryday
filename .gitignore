@@ -44,3 +44,11 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Firebase config files
+/android/app/google-services.json
+
+# Mapbox API
+/lib/Maps/mapboxAPI.dart
+
+#local.properties contains APIKey for google maps

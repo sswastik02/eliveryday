@@ -1,9 +1,8 @@
+import 'package:eliveryday/Maps/mapboxAPI.dart';
 import 'package:flutter/material.dart';
 import 'package:mapbox_search_flutter/mapbox_search_flutter.dart';
 
 class SearchPage extends StatelessWidget {
-  final kApiKey =
-      'pk.eyJ1Ijoic3N3YXN0aWswMiIsImEiOiJja29vY3N6MWEwOGFoMm9zenZydjNudGw1In0.GR5C6FDhMupsYLmNIlO37Q';
   List<double>? _placeCoordinates;
 
   List<double> readPlaceCord() {
@@ -32,6 +31,7 @@ class SearchPage extends StatelessWidget {
           context: context,
         ),
       ),
+      // Safe area avoids any system interfaces (like navigation bar on android)
     );
   }
 }

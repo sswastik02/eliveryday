@@ -59,15 +59,21 @@ class FoodCardTemplateState extends State<FoodCardTemplate> {
           color: Colors.brown,
         ),
       ),
-      margin: EdgeInsets.only(bottom: 10),
+      margin: EdgeInsets.only(top: 5, bottom: 5),
       height: 300,
+      width: MediaQuery.of(context).size.width * 0.92,
       child: Stack(
         children: [
           // Food Image
-          Image.asset(
-            widget.imagesPath + widget.foodData.image,
-            height: 250,
-            // Aspect Ratio is maintained
+          Positioned(
+            top: 5,
+            left: MediaQuery.of(context).size.width * (0.92 - 0.9) / 2,
+            width: MediaQuery.of(context).size.width * 0.9,
+            child: Image.asset(
+              widget.imagesPath + widget.foodData.image,
+              fit: BoxFit.fitWidth,
+              // Aspect Ratio is maintained
+            ),
           ),
           Positioned(
             //NAME

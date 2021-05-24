@@ -24,7 +24,6 @@ class _MyMapsPageState extends State<MyMapsPage> {
   // late is necessary as it is being assigned later
   Location _location = Location();
   late LocationData locationData;
-
   List<Marker> _mark = [];
   double lat = 0.0, lon = 0.0;
   // stored outside cuz oncameraidle does not take Googleposition function
@@ -37,24 +36,66 @@ class _MyMapsPageState extends State<MyMapsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.brown.shade300,
-        actions: [
-          Container(
-            height: 20,
-            width: 100,
-            child: searchButton(),
-          ),
-        ],
-      ),
-      body: Stack(children: [
-        // Stack stacks in the positive z-axis
-        googleMapWidget(),
-        showAddressWidget(),
-        chooseMarkedLocation(),
-      ]),
-    );
+    return FutureBuilder(
+        future: _location.serviceEnabled(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            print(snapshot.data);
+            print("object");
+            if (snapshot.data == false) {
+              return Scaffold(
+                body: Center(
+                  child: Container(
+                    height: 100,
+                    width: 200,
+                    child: Column(
+                      children: [
+                        FittedBox(
+                          fit: BoxFit.fitWidth,
+                          child: Text(
+                            "Turn on Location and reload",
+                            style: TextStyle(fontSize: 400),
+                          ),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            setState(() {});
+                          },
+                          child: Text("Reload"),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            } else {
+              return Scaffold(
+                appBar: AppBar(
+                  backgroundColor: Colors.brown.shade300,
+                  actions: [
+                    Container(
+                      height: 20,
+                      width: 100,
+                      child: searchButton(),
+                    ),
+                  ],
+                ),
+                body: Stack(children: [
+                  // Stack stacks in the positive z-axis
+                  googleMapWidget(),
+                  showAddressWidget(),
+                  chooseMarkedLocation(),
+                ]),
+              );
+            }
+          } else {
+            return Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          }
+        });
   }
 
   Widget searchButton() {

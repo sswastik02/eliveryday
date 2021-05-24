@@ -1,12 +1,15 @@
 import 'dart:ffi';
 
 import 'package:eliveryday/Cart/cart.dart';
+import 'package:eliveryday/Cart/cartInfo.dart';
+import 'package:eliveryday/Internet.dart';
 import 'package:eliveryday/Maps/maps.dart';
 import 'package:eliveryday/Home/home.dart';
-import 'package:eliveryday/phoneauth.dart';
+import 'package:eliveryday/FireBase/phoneauth.dart';
+import 'package:eliveryday/FireBase/styledbuttons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:eliveryday/firebaseCustomServices.dart';
+import 'package:eliveryday/FireBase/firebaseCustomServices.dart';
 
 // routes are used to navigate between pages
 class HomeRoute extends StatefulWidget {
@@ -18,7 +21,7 @@ class _HomeRouteState extends State<HomeRoute> {
   String address = "Select Location";
   String previousAddress = "";
   MyMapsPage myMapsPage = MyMapsPage();
-  bool? signedIn;
+  bool? signedIn = true;
 
   int _currentIndex = 0;
 
@@ -30,13 +33,81 @@ class _HomeRouteState extends State<HomeRoute> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> _children = [Home(), Cart(), PhoneAuth(widget._auth)];
-
+    List<Widget> _children = [
+      Home(),
+      Cart(widget._auth),
+      PhoneAuth(widget._auth)
+    ];
     return Scaffold(
       appBar: customAppBar(),
       bottomNavigationBar: customBottomBar(),
-      body: _children[_currentIndex],
+      body: FutureBuilder<Object>(
+          future: checkInternetConnection(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              if (snapshot.data == 0) {
+                return _children[_currentIndex];
+              } else {
+                return Center(
+                  child: Container(
+                    height: 200,
+                    child: Column(
+                      children: [
+                        Text(
+                          "You are Offline",
+                          style: TextStyle(color: Colors.red, fontSize: 20),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        styledButton(context, "Reload", () {
+                          setState(() {});
+                        })
+                      ],
+                    ),
+                  ),
+                );
+              }
+            } else {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          }),
     );
+
+    //    else {
+    //     return Scaffold(
+    //       body: Center(child: CircularProgressIndicator()),
+    //     );
+    //   }
+    // });
+    // Scaffold(
+    //             body: Center(
+    //               child: Container(
+    //                 height: 200,
+    //                 child: Column(
+    //                   children: [
+    //                     Text(
+    //                       "You are Offline",
+    //                       style: TextStyle(color: Colors.red, fontSize: 20),
+    //                     ),
+    //                     SizedBox(
+    //                       height: 20,
+    //                     ),
+    //                     styledButton(context, "Reload", () {
+    //                       setState(() {});
+    //                     })
+    //                   ],
+    //                 ),
+    //               ),
+    //             ),
+    //           );
+    // return Scaffold(
+    //   appBar: customAppBar(),
+    //   bottomNavigationBar: customBottomBar(),
+    //   body: _children[_currentIndex],
+    // );
   }
 
   AppBar customAppBar() {
@@ -107,6 +178,7 @@ class _HomeRouteState extends State<HomeRoute> {
           if (addr != "locating.......") {
             address = addr;
             previousAddress = addr;
+            cartAddress = addr;
           } else {
             if (previousAddress == "") {
               address = "Select Location";
