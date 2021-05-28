@@ -19,20 +19,15 @@ class CartState extends State<Cart> {
     return Container(
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        color: Colors.amber.withOpacity(0.2),
+        color: Theme.of(context).backgroundColor,
       ),
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: Theme.of(context).primaryColor, width: 5),
-        ),
-        child: Stack(
-          children: [
-            cartTitle(context),
-            cartdisplay(context),
-            refreshButton(context),
-            (cartAllInfo.length == 0) ? emptyCart() : checkoutButton(context),
-          ],
-        ),
+      child: Stack(
+        children: [
+          cartTitle(context),
+          refreshButton(context),
+          cartdisplay(context),
+          (cartAllInfo.length == 0) ? emptyCart() : checkoutButton(context),
+        ],
       ),
     );
   }
@@ -47,7 +42,7 @@ class CartState extends State<Cart> {
           Icon(
             Icons.shopping_cart_sharp,
             size: 100,
-            color: Colors.grey.withOpacity(0.2),
+            color: Colors.grey.withOpacity(0.35),
           ),
           FittedBox(
             fit: BoxFit.fitWidth,
@@ -55,7 +50,7 @@ class CartState extends State<Cart> {
               " Your Cart is Empty ",
               style: TextStyle(
                 fontSize: 40,
-                color: Colors.grey.withOpacity(0.2),
+                color: Colors.grey.withOpacity(0.35),
               ),
             ),
           ),
@@ -66,11 +61,11 @@ class CartState extends State<Cart> {
 
   Widget checkoutButton(BuildContext context) {
     return Positioned(
-      bottom: 1,
-      width: MediaQuery.of(context).size.width * 0.35,
+      top: MediaQuery.of(context).size.height * 0.73,
+      width: MediaQuery.of(context).size.width * 0.4,
       height: MediaQuery.of(context).size.height * 0.07,
       left: MediaQuery.of(context).size.width * 0.5 -
-          MediaQuery.of(context).size.width * (0.35 / 2),
+          MediaQuery.of(context).size.width * (0.4 / 2),
       // bringing to centre horizontal
       child: FittedBox(
         fit: BoxFit.fitWidth,
@@ -100,7 +95,7 @@ class CartState extends State<Cart> {
             if (res != null) {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return Scaffold(
-                  body: checkoutPage(context, widget._auth),
+                  body: CheckoutPage(widget._auth),
                 );
               }));
             }
@@ -115,7 +110,7 @@ class CartState extends State<Cart> {
   Widget refreshButton(BuildContext context) {
     return Positioned(
       top: 7,
-      width: MediaQuery.of(context).size.width * 0.3,
+      width: MediaQuery.of(context).size.width * 0.35,
       right: 10,
       height: MediaQuery.of(context).size.height * 0.05,
       child: FittedBox(
@@ -143,19 +138,19 @@ class CartState extends State<Cart> {
       // Title Cart
       top: 10,
       left: 10,
+
       child: Container(
+        margin: EdgeInsets.only(bottom: 10),
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.red),
-        ),
-        width: MediaQuery.of(context).size.width * 0.2,
+            border: Border.all(color: Theme.of(context).primaryColor),
+            borderRadius: BorderRadius.all(Radius.circular(5))),
+        width: MediaQuery.of(context).size.width * 0.25,
         child: FittedBox(
           fit: BoxFit.fitWidth,
           child: Text(
             " Cart ",
-            style: TextStyle(
-                color: Colors.deepOrange,
-                fontFamily: "Times New Roman",
-                fontSize: 30),
+            style:
+                TextStyle(color: Theme.of(context).primaryColor, fontSize: 30),
           ),
         ),
       ),
@@ -165,8 +160,8 @@ class CartState extends State<Cart> {
   Widget cartdisplay(BuildContext context) {
     return Positioned(
       left: 10,
-      top: MediaQuery.of(context).size.height * 0.07,
-      height: MediaQuery.of(context).size.height * 0.62,
+      top: MediaQuery.of(context).size.height * 0.09,
+      height: MediaQuery.of(context).size.height * 0.6,
       width: MediaQuery.of(context).size.width * 0.93,
       child: Container(
         margin: EdgeInsets.only(top: 5),

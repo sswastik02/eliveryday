@@ -14,7 +14,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         theme: ThemeData(
-          primarySwatch: Colors.red,
+          primarySwatch: Colors.green,
+          primaryColor: Colors.green[900],
+          fontFamily: 'PlayFair',
+          backgroundColor: Color.fromRGBO(243, 176, 115, 0.8),
         ),
         home: HomeRoute());
   }

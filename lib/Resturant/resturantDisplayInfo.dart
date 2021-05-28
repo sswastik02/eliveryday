@@ -30,7 +30,7 @@ Widget photoAndTitle(String photo, String title, String imagesPath) {
           child: Text(
             title,
             style: TextStyle(
-              color: Colors.brown,
+              color: Colors.white,
               fontWeight: FontWeight.bold,
               fontSize: 25,
             ),

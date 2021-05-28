@@ -26,7 +26,7 @@ dependencies:
   google_maps_flutter: ^2.0.3
   location: ^4.1.1
   geocoder: ^0.2.1
-  
+  http:
 
   
   firebase_core: ^0.4.0+9
@@ -37,6 +37,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   mapbox_search_flutter: ^1.0.6+1
+  curved_navigation_bar: ^0.3.7
  # flutter_google_places: ^0.3.0
 
 dev_dependencies:
@@ -71,10 +72,16 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+  fonts:
+    - family: SF-UI-Display-Regular
+      fonts:
+        - asset: lib/Fonts/SF-UI-Display-Regular.otf
+    - family: ProximaNova
+      fonts:
+        - asset: lib/Fonts/ProximaNova.ttf
+    - family: PlayFair
+      fonts:
+        - asset: lib/Fonts/PlayFair.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

@@ -6,9 +6,9 @@ import 'FoodCard.dart';
 import 'singleResturantView.dart';
 
 class ResturantCard extends StatelessWidget {
-  String resturantTitle;
-  String image;
-  List<Food> foodItems;
+  final String resturantTitle;
+  final String image;
+  final List<Food> foodItems;
   ResturantCard(this.foodItems,
       {this.resturantTitle = "Resturant", this.image = "defaultResturant.jpg"});
   final String imagesPath = "lib/Resturant/resturantImages/";
@@ -17,8 +17,22 @@ class ResturantCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Container(
+        width: MediaQuery.of(context).size.width * 0.9,
+        height: MediaQuery.of(context).size.height * 0.2,
         margin: EdgeInsets.only(bottom: 10),
-        child: photoAndTitle(image, resturantTitle, imagesPath),
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(10),
+            ),
+          ),
+          elevation: 10,
+          color: Theme.of(context).primaryColor,
+          child: FittedBox(
+            fit: BoxFit.fitWidth,
+            child: photoAndTitle(image, resturantTitle, imagesPath),
+          ),
+        ),
       ),
       onTap: () {
         Navigator.push(

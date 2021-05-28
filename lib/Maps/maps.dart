@@ -1,3 +1,4 @@
+import 'package:eliveryday/onlyBackAppBar.dart';
 import 'package:flutter/material.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -11,10 +12,18 @@ import 'mapSearch.dart';
 // the above didnt work for places api(requires a billing account)
 
 class MyMapsPage extends StatefulWidget {
+  double lat = 0.0, lon = 0.0;
   String _address = "locating.......";
+  bool orderTrack;
+  Polyline? mapPolyline;
+  MyMapsPage({this.orderTrack = false, this.mapPolyline});
   _MyMapsPageState createState() => _MyMapsPageState();
   String returnAddress() {
     return _address;
+  }
+
+  LatLng returnCord() {
+    return LatLng(lat, lon);
   }
 }
 
@@ -25,8 +34,23 @@ class _MyMapsPageState extends State<MyMapsPage> {
   Location _location = Location();
   late LocationData locationData;
   List<Marker> _mark = [];
-  double lat = 0.0, lon = 0.0;
+
   // stored outside cuz oncameraidle does not take Googleposition function
+  @override
+  void initState() {
+    if (widget.orderTrack) {
+      _mark.add(Marker(
+          markerId: MarkerId("Delivery"),
+          position:
+              widget.mapPolyline!.points[widget.mapPolyline!.points.length - 1],
+          infoWindow: InfoWindow(title: "Delivery address")));
+      _mark.add(Marker(
+          markerId: MarkerId("Pickup"),
+          position: widget.mapPolyline!.points[0],
+          infoWindow: InfoWindow(title: "Pickup address")));
+      super.initState();
+    }
+  }
 
   @override
   void dispose() {
@@ -70,21 +94,21 @@ class _MyMapsPageState extends State<MyMapsPage> {
               );
             } else {
               return Scaffold(
-                appBar: AppBar(
-                  backgroundColor: Colors.brown.shade300,
-                  actions: [
-                    Container(
-                      height: 20,
-                      width: 100,
-                      child: searchButton(),
-                    ),
-                  ],
-                ),
+                extendBodyBehindAppBar: true,
+                appBar: widget.orderTrack
+                    ? null
+                    : TopBar(
+                        title: searchButton(),
+                        bckbtn: true,
+                      ),
                 body: Stack(children: [
                   // Stack stacks in the positive z-axis
                   googleMapWidget(),
-                  showAddressWidget(),
-                  chooseMarkedLocation(),
+                  Container(
+                      child: widget.orderTrack ? null : showAddressWidget()),
+                  Container(
+                      child: widget.orderTrack ? null : chooseMarkedLocation()),
+                  // put in a container to use the ternary operator
                 ]),
               );
             }
@@ -99,8 +123,10 @@ class _MyMapsPageState extends State<MyMapsPage> {
   }
 
   Widget searchButton() {
-    return ElevatedButton(
-      child: Text('Search'),
+    return ElevatedButton.icon(
+      style: ElevatedButton.styleFrom(primary: Theme.of(context).primaryColor),
+      icon: Icon(Icons.search),
+      label: Text('Search'),
       onPressed: () async {
         SearchPage searchPage = SearchPage();
         // need to await as coordinates are fetched from here
@@ -116,14 +142,14 @@ class _MyMapsPageState extends State<MyMapsPage> {
             ),
           );
           setState(() {
-            lat = cord[0];
-            lon = cord[1];
+            widget.lat = cord[0];
+            widget.lon = cord[1];
             _mark.add(Marker(
               markerId: MarkerId('camera'),
               draggable: false,
               position: LatLng(
-                lat,
-                lon,
+                widget.lat,
+                widget.lon,
               ),
             ));
           });
@@ -142,29 +168,39 @@ class _MyMapsPageState extends State<MyMapsPage> {
       onMapCreated: onMapCreated,
       myLocationEnabled: true,
       markers: Set.from(_mark),
-      onCameraMove: (CameraPosition _position) {
-        setState(() {
-          lat = _position.target.latitude;
-          lon = _position.target.longitude;
-          _mark.add(Marker(
-            markerId: MarkerId('camera'),
-            draggable: false,
-            position: LatLng(
-              lat,
-              lon,
-            ),
-          ));
+      polylines: {
+        widget.mapPolyline ?? Polyline(polylineId: PolylineId("Nothing"))
+        // ?? => left side if not null else right side
+      },
+      onCameraMove: widget.orderTrack
+          ? null
+          : (CameraPosition _position) {
+              setState(() {
+                widget.lat = _position.target.latitude;
+                widget.lon = _position.target.longitude;
+                _mark.add(
+                  Marker(
+                    markerId: MarkerId('camera'),
+                    draggable: false,
+                    position: LatLng(
+                      widget.lat,
+                      widget.lon,
+                    ),
+                  ),
+                );
 
-          widget._address = "locating......."; // if camera is moving
-        });
-      },
-      onCameraIdle: () async {
-        await cordtoname(Coordinates(lat, lon));
-        setState(() {
-          // await waits for a completed future return
-          print(widget._address);
-        });
-      },
+                widget._address = "locating......."; // if camera is moving
+              });
+            },
+      onCameraIdle: widget.orderTrack
+          ? null
+          : () async {
+              await cordtoname(Coordinates(widget.lat, widget.lon));
+              setState(() {
+                // await waits for a completed future return
+                print(widget._address);
+              });
+            },
     );
   }
 
@@ -176,7 +212,7 @@ class _MyMapsPageState extends State<MyMapsPage> {
       right: 15,
       child: Container(
         padding: EdgeInsets.all(15.0),
-        color: Colors.brown.shade700.withAlpha(170),
+        color: Colors.green.shade700.withAlpha(190),
         child: Container(
           child: Text(
             widget._address,
@@ -199,7 +235,7 @@ class _MyMapsPageState extends State<MyMapsPage> {
       child: ElevatedButton(
         child: Text('Choose Location'),
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(Colors.brown.shade800),
+          backgroundColor: MaterialStateProperty.all(Colors.green.shade800),
         ),
         onPressed: () {
           Navigator.pop(context);
@@ -220,15 +256,22 @@ class _MyMapsPageState extends State<MyMapsPage> {
     //   );
     // }
     // );
-    // the above code keeps on bringing camera to centre i wanted to do it only once
+    // the above code keeps on bringing camera to centre(because of the listener) i wanted to do it only once
 
-    locationData = await _location.getLocation();
-    lat = locationData.latitude!;
-    lon = locationData.longitude!;
+    if (widget.orderTrack == false) {
+      locationData = await _location.getLocation();
+      widget.lat = locationData.latitude!;
+      widget.lon = locationData.longitude!;
+    } else {
+      var points = widget.mapPolyline!.points;
+      widget.lat = points[points.length - 1].latitude;
+      widget.lon = points[points.length - 1].longitude;
+      // last point is the delivery address
+    }
 
     _controller.animateCamera(
       CameraUpdate.newCameraPosition(
-        CameraPosition(target: LatLng(lat, lon), zoom: 15),
+        CameraPosition(target: LatLng(widget.lat, widget.lon), zoom: 15),
         // animate to current location
       ),
     );

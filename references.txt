@@ -17,3 +17,7 @@ https://stackoverflow.com/questions/49648022/check-whether-there-is-an-internet-
 https://dev.to/no2s14/hide-your-api-keys-from-your-android-manifest-file-with-flutter-using-local-properties-3f4e
 
 https://cuneyt.aliustaoglu.biz/en/hide-your-api-keys-from-androidmanifest-xml-using-local-properties/amp/
+
+https://medium.com/@ketanchoyal/create-a-custom-app-bar-flutter-e32164e0be6f
+
+https://pub.dev/packages/curved_navigation_bar
