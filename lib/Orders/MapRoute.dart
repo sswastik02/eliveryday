@@ -1,11 +1,7 @@
 import 'dart:convert' as convert;
-
-import 'package:eliveryday/Cart/cartInfo.dart';
 import 'package:eliveryday/Cart/cartModel.dart';
 import 'package:eliveryday/Maps/mapboxAPI.dart';
 import 'package:eliveryday/Maps/maps.dart';
-import 'package:eliveryday/Resturant/resturantDisplayInfo.dart';
-import 'package:eliveryday/onlyBackAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;

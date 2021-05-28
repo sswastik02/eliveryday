@@ -165,8 +165,8 @@ class _PhoneAuthState extends State<PhoneAuth> {
       });
       // once completed stop the loading
     } catch (e) {
-      _showSnackbar("Failed with Error code : ${e}");
-      print("Failed with Error code : ${e}");
+      _showSnackbar("Failed with Error code : $e");
+      print("Failed with Error code : $e");
     }
   }
 
@@ -184,8 +184,8 @@ class _PhoneAuthState extends State<PhoneAuth> {
         loading = false;
       });
     } catch (e) {
-      _showSnackbar("Failed to sign in : ${e}");
-      print("Failed to sign in : ${e}");
+      _showSnackbar("Failed to sign in : $e");
+      print("Failed to sign in : $e");
     }
   }
 }
