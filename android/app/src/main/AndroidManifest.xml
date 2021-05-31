@@ -5,8 +5,10 @@
    <uses-permission
       android:name="android.permission.ACCESS_COARSE_LOCATION" />
       <!-- Add above two for permissions for google location -->
+  <uses-permission
+      android:name="android.permission.INTERNET" />
    <application
-        android:label="eliveryday"
+        android:label="Eliveryday"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

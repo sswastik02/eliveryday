@@ -10,10 +10,13 @@ Widget photoAndTitle(String photo, String title, String imagesPath) {
       ),
       ClipRRect(
         // Image
-        child: Image.asset(
-          imagesPath + photo,
+        child: Container(
           width: 100,
           height: 100,
+          child: Image.asset(
+            imagesPath + photo,
+            fit: BoxFit.fill,
+          ),
         ),
         borderRadius: BorderRadius.circular(100),
       ),

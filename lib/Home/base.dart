@@ -36,11 +36,15 @@ class _HomeRouteState extends State<HomeRoute> {
     List<Widget> _children = [
       Home(),
       Cart(widget._auth),
-      PhoneAuth(widget._auth),
       DisplayOrder(),
+      Container(
+        color: Theme.of(context).backgroundColor,
+        child: Center(child: signoutButton(context, widget._auth)),
+      )
     ];
     return Scaffold(
       appBar: TopBar(
+        context: context,
         title: addressLocator(context),
       ),
       bottomNavigationBar: customBottomBar(),
@@ -51,22 +55,25 @@ class _HomeRouteState extends State<HomeRoute> {
               if (snapshot.data == 0) {
                 return _children[_currentIndex];
               } else {
-                return Center(
-                  child: Container(
-                    height: 200,
-                    child: Column(
-                      children: [
-                        Text(
-                          "You are Offline",
-                          style: TextStyle(color: Colors.red, fontSize: 20),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        styledButton(context, "Reload", () {
-                          setState(() {});
-                        })
-                      ],
+                return Container(
+                  color: Theme.of(context).backgroundColor,
+                  child: Center(
+                    child: Container(
+                      height: 200,
+                      child: Column(
+                        children: [
+                          Text(
+                            "You are Offline",
+                            style: TextStyle(color: Colors.red, fontSize: 20),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          styledButton(context, "Reload", () {
+                            setState(() {});
+                          })
+                        ],
+                      ),
                     ),
                   ),
                 );
@@ -113,37 +120,6 @@ class _HomeRouteState extends State<HomeRoute> {
     // );
   }
 
-  AppBar customAppBar() {
-    return AppBar(
-      leading: FittedBox(
-        fit: BoxFit.fitWidth,
-        child: Row(
-          children: [
-            SizedBox(
-              width: 3,
-            ),
-            Icon(
-              Icons.delivery_dining,
-              size: 40,
-            ),
-            SizedBox(
-              width: 3,
-            ),
-            // Sized Box can be used for spaces
-            Text(
-              "Eliveryday",
-              style:
-                  TextStyle(fontSize: MediaQuery.of(context).size.width * 0.04),
-            )
-          ],
-        ),
-      ),
-      leadingWidth: MediaQuery.of(context).size.width * 0.8,
-      // It doesnt cross max leading width no matter what length you specify
-      actions: [addressLocator(context)],
-    );
-  }
-
   CurvedNavigationBar customBottomBar() {
     return CurvedNavigationBar(
       items: [
@@ -156,18 +132,21 @@ class _HomeRouteState extends State<HomeRoute> {
           color: (_currentIndex == 1) ? Colors.white : Colors.black,
         ),
         Icon(
-          Icons.ac_unit,
+          Icons.list,
           color: (_currentIndex == 2) ? Colors.white : Colors.black,
         ),
         Icon(
-          Icons.list,
+          Icons.ac_unit,
           color: (_currentIndex == 3) ? Colors.white : Colors.black,
         ),
       ],
       backgroundColor: Theme.of(context).backgroundColor,
       color: Theme.of(context).primaryColor,
       onTap: onTabTapped,
-      height: 60,
+      height: (MediaQuery.of(context).size.height * 0.1 > 70)
+          ? 70
+          : MediaQuery.of(context).size.height * 0.1,
+      animationCurve: Curves.easeInOut,
     );
   }
 

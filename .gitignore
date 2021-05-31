@@ -52,3 +52,5 @@ app.*.map.json
 /lib/Maps/mapboxAPI.dart
 
 #local.properties contains APIKey for google maps
+
+upload-keystore.jks

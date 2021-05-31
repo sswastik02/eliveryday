@@ -1,5 +1,6 @@
-import 'package:eliveryday/onlyBackAppBar.dart';
+import 'package:eliveryday/customAppBar.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart'; //flutter run --no-sound-null-safety
@@ -29,7 +30,7 @@ class MyMapsPage extends StatefulWidget {
 
 class _MyMapsPageState extends State<MyMapsPage> {
   LatLng _initialcameraposition = LatLng(20.5937, 78.9629);
-  late GoogleMapController _controller;
+  GoogleMapController? _controller;
   // late is necessary as it is being assigned later
   Location _location = Location();
   late LocationData locationData;
@@ -48,23 +49,25 @@ class _MyMapsPageState extends State<MyMapsPage> {
           markerId: MarkerId("Pickup"),
           position: widget.mapPolyline!.points[0],
           infoWindow: InfoWindow(title: "Pickup address")));
-      super.initState();
+    } else {
+      _mark = [];
     }
+    super.initState();
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller?.dispose(); // For disposing ? elements
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: _location.serviceEnabled(),
+        future: Geolocator.getCurrentPosition(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            print(snapshot.data);
+            print(snapshot.data.toString());
             print("object");
             if (snapshot.data == false) {
               return Scaffold(
@@ -98,12 +101,14 @@ class _MyMapsPageState extends State<MyMapsPage> {
                 appBar: widget.orderTrack
                     ? null
                     : TopBar(
+                        context: context,
                         title: searchButton(),
                         bckbtn: true,
                       ),
                 body: Stack(children: [
                   // Stack stacks in the positive z-axis
                   googleMapWidget(),
+                  gotoLocationButton(),
                   Container(
                       child: widget.orderTrack ? null : showAddressWidget()),
                   Container(
@@ -115,18 +120,77 @@ class _MyMapsPageState extends State<MyMapsPage> {
           } else {
             return Scaffold(
               body: Center(
-                child: CircularProgressIndicator(),
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.5,
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  child: Column(
+                    children: [
+                      FittedBox(
+                        fit: BoxFit.fitWidth,
+                        child: Text(
+                          "Turn on Location and reload",
+                          style: TextStyle(fontSize: 400),
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          setState(() {});
+                        },
+                        child: Text("Reload"),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text("Go back"),
+                      ),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      SizedBox(
+                        height: 50,
+                        width: 50,
+                        child: CircularProgressIndicator(),
+                      )
+                    ],
+                  ),
+                ),
               ),
             );
           }
         });
   }
 
+  Widget gotoLocationButton() {
+    return Positioned(
+      right: 10,
+      top: MediaQuery.of(context).size.height * 0.15,
+      child: Container(
+        color: Theme.of(context).cardColor,
+        width: 40,
+        height: 40,
+        child: IconButton(
+          icon: Icon(Icons.gps_fixed),
+          onPressed: () {
+            _controller!.animateCamera(CameraUpdate.newCameraPosition(
+                CameraPosition(target: _initialcameraposition, zoom: 15)));
+          },
+        ),
+      ),
+    );
+  }
+
   Widget searchButton() {
-    return ElevatedButton.icon(
+    return TextButton.icon(
       style: ElevatedButton.styleFrom(primary: Theme.of(context).primaryColor),
-      icon: Icon(Icons.search),
-      label: Text('Search'),
+      icon: Icon(
+        Icons.search,
+        color: Colors.white,
+      ),
+      label: Text(
+        'Search',
+        style: TextStyle(color: Colors.white),
+      ),
       onPressed: () async {
         SearchPage searchPage = SearchPage();
         // need to await as coordinates are fetched from here
@@ -136,7 +200,7 @@ class _MyMapsPageState extends State<MyMapsPage> {
 
         var cord = searchPage.readPlaceCord();
         if (cord != []) {
-          _controller.moveCamera(
+          _controller!.moveCamera(
             CameraUpdate.newCameraPosition(
               CameraPosition(target: LatLng(cord[0], cord[1]), zoom: 15),
             ),
@@ -167,9 +231,12 @@ class _MyMapsPageState extends State<MyMapsPage> {
       mapType: MapType.normal,
       onMapCreated: onMapCreated,
       myLocationEnabled: true,
+      myLocationButtonEnabled: false,
       markers: Set.from(_mark),
       polylines: {
-        widget.mapPolyline ?? Polyline(polylineId: PolylineId("Nothing"))
+        widget.orderTrack
+            ? widget.mapPolyline!
+            : Polyline(polylineId: PolylineId("Nothing"))
         // ?? => left side if not null else right side
       },
       onCameraMove: widget.orderTrack
@@ -269,12 +336,14 @@ class _MyMapsPageState extends State<MyMapsPage> {
       // last point is the delivery address
     }
 
-    _controller.animateCamera(
+    _controller!.animateCamera(
       CameraUpdate.newCameraPosition(
         CameraPosition(target: LatLng(widget.lat, widget.lon), zoom: 15),
         // animate to current location
       ),
     );
+
+    _initialcameraposition = LatLng(widget.lat, widget.lon);
 
     // https://medium.com/flutter-community/exploring-google-maps-in-flutter-8a86d3783d24
   }

@@ -24,7 +24,7 @@ class CheckOutPageState extends State<CheckoutPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(color: Colors.amber.withOpacity(0.3)),
+        decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
         child: Stack(
           children: [
             Positioned(

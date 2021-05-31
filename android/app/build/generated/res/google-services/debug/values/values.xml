@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">644368214139-1d0jhnc157ubfpa4bdcesv286o07864q.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">644368214139</string>
+    <string name="google_api_key" translatable="false">AIzaSyCPiE0CcOyCht9VqZdhZ4j63B1MslpthoI</string>
+    <string name="google_app_id" translatable="false">1:644368214139:android:c782127d4b45da37e35ade</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyCPiE0CcOyCht9VqZdhZ4j63B1MslpthoI</string>
+    <string name="google_storage_bucket" translatable="false">eliveryday.appspot.com</string>
+    <string name="project_id" translatable="false">eliveryday</string>
+</resources>

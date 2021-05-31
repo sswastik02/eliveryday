@@ -69,14 +69,20 @@ class FoodCardTemplateState extends State<FoodCardTemplate> {
           children: [
             // Food Image
             Positioned(
-              child: ClipRRect(
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    topRight: Radius.circular(10)),
-                child: Image.asset(
-                  widget.imagesPath + widget.foodData.image,
-                  fit: BoxFit.fill,
-                  // Aspect Ratio is maintained
+              child: Container(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      topRight: Radius.circular(10)),
+                  child: Container(
+                    height: 250,
+                    width: MediaQuery.of(context).size.width * 0.92,
+                    child: Image.asset(
+                      widget.imagesPath + widget.foodData.image,
+                      fit: BoxFit.fill,
+                      // Aspect Ratio is maintained
+                    ),
+                  ),
                 ),
               ),
             ),

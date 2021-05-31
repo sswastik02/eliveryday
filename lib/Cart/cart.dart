@@ -61,7 +61,7 @@ class CartState extends State<Cart> {
 
   Widget checkoutButton(BuildContext context) {
     return Positioned(
-      top: MediaQuery.of(context).size.height * 0.73,
+      bottom: 8,
       width: MediaQuery.of(context).size.width * 0.4,
       height: MediaQuery.of(context).size.height * 0.07,
       left: MediaQuery.of(context).size.width * 0.5 -
@@ -109,7 +109,8 @@ class CartState extends State<Cart> {
 
   Widget refreshButton(BuildContext context) {
     return Positioned(
-      top: 7,
+      //refresh button
+      top: 15,
       width: MediaQuery.of(context).size.width * 0.35,
       right: 10,
       height: MediaQuery.of(context).size.height * 0.05,
@@ -138,13 +139,13 @@ class CartState extends State<Cart> {
       // Title Cart
       top: 10,
       left: 10,
-
+      height: MediaQuery.of(context).size.height * 0.09,
       child: Container(
         margin: EdgeInsets.only(bottom: 10),
         decoration: BoxDecoration(
             border: Border.all(color: Theme.of(context).primaryColor),
             borderRadius: BorderRadius.all(Radius.circular(5))),
-        width: MediaQuery.of(context).size.width * 0.25,
+        width: MediaQuery.of(context).size.width * 0.24,
         child: FittedBox(
           fit: BoxFit.fitWidth,
           child: Text(
@@ -159,6 +160,7 @@ class CartState extends State<Cart> {
 
   Widget cartdisplay(BuildContext context) {
     return Positioned(
+      // Contents of Cart
       left: 10,
       top: MediaQuery.of(context).size.height * 0.09,
       height: MediaQuery.of(context).size.height * 0.6,

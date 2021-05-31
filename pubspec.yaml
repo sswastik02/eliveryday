@@ -27,6 +27,8 @@ dependencies:
   location: ^4.1.1
   geocoder: ^0.2.1
   http:
+  geolocator:
+  
 
   
   firebase_core: ^0.4.0+9

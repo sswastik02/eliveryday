@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 
 class TopBar extends StatelessWidget implements PreferredSizeWidget {
   final Widget title;
+  BuildContext context;
   bool bckbtn;
   @override
   final Size preferredSize;
   TopBar({
     required this.title,
     this.bckbtn = false,
-  }) : preferredSize = Size.fromHeight(60.0);
+    required this.context,
+  }) : preferredSize =
+            Size.fromHeight(MediaQuery.of(context).size.height * 0.2);
 
   @override
   Widget build(BuildContext context) {
@@ -19,19 +22,19 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Card(
-              elevation: 10,
-              color: Theme.of(context).primaryColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(30),
+            GestureDetector(
+              onTap: () => bckbtn ? Navigator.pop(context) : null,
+              child: Card(
+                elevation: 10,
+                color: Theme.of(context).primaryColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(30),
+                  ),
                 ),
-              ),
-              child: GestureDetector(
-                onTap: () => bckbtn ? Navigator.pop(context) : null,
                 child: Container(
-                  height: 50,
-                  width: 50,
+                  height: 40,
+                  width: 40,
                   margin: EdgeInsets.all(10),
                   child: Icon(
                     bckbtn ? Icons.arrow_back_ios : Icons.delivery_dining,

@@ -50,7 +50,7 @@ class HomeState extends State<Home> {
   Widget resturantListDisplay(BuildContext context) {
     return Positioned(
       // List of resturant card
-      top: 70,
+      top: MediaQuery.of(context).size.height * 0.1,
       height: MediaQuery.of(context).size.height * 0.65,
       width: MediaQuery.of(context).size.width,
       child: SingleChildScrollView(
