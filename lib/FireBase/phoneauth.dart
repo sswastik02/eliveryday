@@ -51,7 +51,6 @@ class _PhoneAuthState extends State<PhoneAuth> {
                                 },
                                 child: Text('Verify Number'),
                               ),
-                              signoutButton(context, widget._auth),
                             ],
                           )
                         : Column(
@@ -72,7 +71,6 @@ class _PhoneAuthState extends State<PhoneAuth> {
                                 },
                                 child: Text('Sign In'),
                               ),
-                              signoutButton(context, widget._auth),
                             ],
                           ),
                   ],

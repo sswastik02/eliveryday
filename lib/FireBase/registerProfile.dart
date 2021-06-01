@@ -59,6 +59,7 @@ class _InputProfileState extends State<InputProfile> {
                     phoneNumber: widget.phoneNumber!,
                   );
                   await widget.fireStoreService.createUserProfile(cUser);
+                  currentUser = cUser;
                   print('Registered');
                   Navigator.pop(context);
                 }

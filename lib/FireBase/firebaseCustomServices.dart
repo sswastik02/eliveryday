@@ -39,6 +39,17 @@ class FireStoreService {
     }
   }
 
+  Future<User> getUserProfile(FirebaseUser user) async {
+    try {
+      DocumentSnapshot documentSnapshot =
+          await _collectionReference.document(user.uid).get();
+      return User.fromJSON(documentSnapshot.data);
+    } catch (e) {
+      print(e);
+      return User(id: "Error");
+    }
+  }
+
   Future checkUserExists(FirebaseUser user) async {
     bool result = false;
     DocumentSnapshot documentSnapshot =

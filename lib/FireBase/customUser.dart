@@ -28,3 +28,5 @@ class User {
     };
   }
 }
+
+User currentUser = User(); // Stores the currently signed in User

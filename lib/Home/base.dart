@@ -8,6 +8,7 @@ import 'package:eliveryday/FireBase/phoneauth.dart';
 import 'package:eliveryday/FireBase/styledbuttons.dart';
 import 'package:eliveryday/customAppBar.dart';
 import 'package:eliveryday/Orders/orders.dart';
+import 'package:eliveryday/profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -37,10 +38,7 @@ class _HomeRouteState extends State<HomeRoute> {
       Home(),
       Cart(widget._auth),
       DisplayOrder(),
-      Container(
-        color: Theme.of(context).backgroundColor,
-        child: Center(child: signoutButton(context, widget._auth)),
-      )
+      Profile(auth: widget._auth)
     ];
     return Scaffold(
       appBar: TopBar(
@@ -136,7 +134,7 @@ class _HomeRouteState extends State<HomeRoute> {
           color: (_currentIndex == 2) ? Colors.white : Colors.black,
         ),
         Icon(
-          Icons.ac_unit,
+          Icons.account_circle,
           color: (_currentIndex == 3) ? Colors.white : Colors.black,
         ),
       ],

@@ -1,3 +1,4 @@
+import 'package:eliveryday/profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -31,7 +32,8 @@ Widget styledButton(BuildContext context, String txt, VoidCallback? func,
   );
 }
 
-Widget signoutButton(BuildContext context, FirebaseAuth _auth) {
+Widget signoutButton(BuildContext context, FirebaseAuth _auth,
+    {ProfileState? state}) {
   return Builder(builder: (BuildContext context) {
     return styledButton(context, "Sign out from App      ", () async {
       final FirebaseUser user = await _auth.currentUser();
@@ -42,10 +44,12 @@ Widget signoutButton(BuildContext context, FirebaseAuth _auth) {
         return;
       }
       await _auth.signOut();
+
       final String uid = user.uid;
       Scaffold.of(context).showSnackBar(SnackBar(
         content: Text(uid + ' has successfully signed out.'),
       ));
+      state?.setState(() {});
     }, icon: Icons.vpn_key_outlined, iconColor: Colors.red);
   });
 }
