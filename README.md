@@ -40,25 +40,25 @@ create collections 'users' and 'carts'
 
 # Screenshots
 
-<img src="screenshots/home.jpg" style="zoom: 20%" />
-<img src="screenshots/emptyCart.jpg" style="zoom: 20%" />
-<img src="screenshots/emptyOrder.jpg" style="zoom: 20%" />
-<img src="screenshots/noProfile.jpg" style="zoom: 20%" />
-<img src="screenshots/cartWithLocation.jpg" style="zoom: 20%" />
-<img src="screenshots/trackOrder.jpg" style="zoom: 20%" />
+<img src="screenshots/home.png" style="zoom: 20%" />
+<img src="screenshots/emptyCart.png" style="zoom: 20%" />
+<img src="screenshots/emptyOrder.png" style="zoom: 20%" />
+<img src="screenshots/noProfile.png" style="zoom: 20%" />
+<img src="screenshots/cartWithLocation.png" style="zoom: 20%" />
+<img src="screenshots/trackOrder.png" style="zoom: 20%" />
 <img src="screenshots/diplayProfile.png" style="zoom: 20%" />
-<img src="screenshots/checkout.jpg" style="zoom: 20%" />
-<img src="screenshots/chooseLocation.jpg" style="zoom: 20%" />
-<img src="screenshots/searchLocation.jpg" style="zoom: 20%" />
-<img src="screenshots/phone.jpg" style="zoom: 20%" />
-<img src="screenshots/verification.jpg" style="zoom: 20%" />
-<img src="screenshots/profileInput.jpg" style="zoom: 20%" />
-<img src="screenshots/orderMap.jpg" style="zoom: 20%" />
-<img src="screenshots/orderMapDetails.jpg" style="zoom: 20%" />
-<img src="screenshots/resturant.jpg" style="zoom: 20%" />
-<img src="screenshots/resturant2.jpg" style="zoom: 20%" />
-<img src="screenshots/usersFirebase.jpg" style="zoom: 20%" />
-<img src="screenshots/cartFirebase.jpg" style="zoom: 20%" />
+<img src="screenshots/checkout.png" style="zoom: 20%" />
+<img src="screenshots/chooseLocation.png" style="zoom: 20%" />
+<img src="screenshots/searchLocation.png" style="zoom: 20%" />
+<img src="screenshots/phone.png" style="zoom: 20%" />
+<img src="screenshots/verification.png" style="zoom: 20%" />
+<img src="screenshots/profileInput.png" style="zoom: 20%" />
+<img src="screenshots/orderMap.png" style="zoom: 20%" />
+<img src="screenshots/orderMapDetails.png" style="zoom: 20%" />
+<img src="screenshots/resturant.png" style="zoom: 20%" />
+<img src="screenshots/resturant2.png" style="zoom: 20%" />
+<img src="screenshots/usersFirebase.png" style="zoom: 20%" />
+<img src="screenshots/cartFirebase.png" style="zoom: 20%" />
 
 
 
