@@ -2,6 +2,13 @@
 
 An Android Food delivery with Map integration and Firebase app built using flutter 
 
+# Technologies 
+Flutter and Firebase
+
+# Requirements
+
+Basic Flutter Setup with Android SDK
+
 # Setup
 
 Add the Google API key to local.properties
