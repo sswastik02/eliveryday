@@ -40,25 +40,36 @@ create collections 'users' and 'carts'
 
 # Screenshots
 
-<img src="screenshots/home.png" style="zoom: 20%" />
-<img src="screenshots/emptyCart.png" style="zoom: 20%" />
-<img src="screenshots/emptyOrder.png" style="zoom: 20%" />
-<img src="screenshots/noProfile.png" style="zoom: 20%" />
-<img src="screenshots/cartWithLocation.png" style="zoom: 20%" />
-<img src="screenshots/trackOrder.png" style="zoom: 20%" />
-<img src="screenshots/diplayProfile.png" style="zoom: 20%" />
-<img src="screenshots/checkout.png" style="zoom: 20%" />
-<img src="screenshots/chooseLocation.png" style="zoom: 20%" />
-<img src="screenshots/searchLocation.png" style="zoom: 20%" />
-<img src="screenshots/phone.png" style="zoom: 20%" />
-<img src="screenshots/verification.png" style="zoom: 20%" />
-<img src="screenshots/profileInput.png" style="zoom: 20%" />
-<img src="screenshots/orderMap.png" style="zoom: 20%" />
-<img src="screenshots/orderMapDetails.png" style="zoom: 20%" />
-<img src="screenshots/resturant.png" style="zoom: 20%" />
-<img src="screenshots/resturant2.png" style="zoom: 20%" />
-<img src="screenshots/usersFirebase.png" style="zoom: 20%" />
-<img src="screenshots/cartFirebase.png" style="zoom: 20%" />
+### Initial View
+<img src="screenshots/home.png"/><img src="screenshots/emptyCart.png"/>
+<img src="screenshots/emptyOrder.png"/><img src="screenshots/noProfile.png"/>
+
+### Restuarants
+<img src="screenshots/resturant.png"/><img src="screenshots/resturant2.png"/>
+
+### During Order
+
+<img src="screenshots/cartWithLocation.png"/><img src="screenshots/checkout.png"/>
+<img src="screenshots/trackOrder.png"/><img src="screenshots/displayProfile.png"/>
+
+### Choosing Delivery Location
+
+
+<img src="screenshots/chooseLocation.png"/><img src="screenshots/searchLocation.png"/>
+
+### Phone Auth and Profile
+
+<img src="screenshots/phone.png"/><img src="screenshots/verification.png"/>
+<img src="screenshots/profileInput.png"/>
+
+### Order Display on Maps
+
+<img src="screenshots/orderMap.png"/><img src="screenshots/orderMapDetails.png"/>
+
+### Firebase display
+
+<img src="screenshots/usersFirebase.png"/><img src="screenshots/cartFirebase.png"/>
+
 
 
 
