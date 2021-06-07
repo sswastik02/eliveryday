@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eliveryday/FireBase/customUser.dart';
 import 'package:eliveryday/FireBase/firebaseCustomServices.dart';
 import 'package:eliveryday/FireBase/phoneauth.dart';

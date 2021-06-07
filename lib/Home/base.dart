@@ -4,7 +4,6 @@ import 'package:eliveryday/Cart/cartInfo.dart';
 import 'package:eliveryday/Internet.dart';
 import 'package:eliveryday/Maps/maps.dart';
 import 'package:eliveryday/Home/home.dart';
-import 'package:eliveryday/FireBase/phoneauth.dart';
 import 'package:eliveryday/FireBase/styledbuttons.dart';
 import 'package:eliveryday/customAppBar.dart';
 import 'package:eliveryday/Orders/orders.dart';

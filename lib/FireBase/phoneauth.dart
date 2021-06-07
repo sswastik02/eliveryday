@@ -1,5 +1,4 @@
 import 'package:eliveryday/FireBase/registerProfile.dart';
-import 'package:eliveryday/FireBase/styledbuttons.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
