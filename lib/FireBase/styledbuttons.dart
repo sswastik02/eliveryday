@@ -1,6 +1,7 @@
 import 'package:eliveryday/profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 
 Widget styledButton(BuildContext context, String txt, VoidCallback? func,
     {IconData icon: Icons.delivery_dining,
@@ -50,6 +51,7 @@ Widget signoutButton(BuildContext context, FirebaseAuth _auth,
         content: Text(uid + ' has successfully signed out.'),
       ));
       state?.setState(() {});
+      Phoenix.rebirth(context);
     }, icon: Icons.vpn_key_outlined, iconColor: Colors.red);
   });
 }

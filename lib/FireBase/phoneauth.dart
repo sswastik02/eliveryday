@@ -1,3 +1,4 @@
+import 'package:eliveryday/FireBase/customUser.dart';
 import 'package:eliveryday/FireBase/registerProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -113,6 +114,9 @@ class _PhoneAuthState extends State<PhoneAuth> {
       if (result == false) {
         widget._auth.signOut();
       }
+      // if result is true profile was inputted and will be stored as currentUser
+    } else {
+      currentUser = await fireStoreService.getUserProfile(user);
     }
     return authResult;
   }

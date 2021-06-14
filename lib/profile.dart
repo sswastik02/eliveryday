@@ -131,7 +131,11 @@ class ProfileState extends State<Profile> {
   }
 
   Widget profileDisplay() {
-    assignCurrentUser();
+    if (currentUser.fullName == '') {
+      assignCurrentUser();
+    } else {
+      loading = false;
+    }
 
     TextStyle style = TextStyle(fontSize: 20);
     return Positioned(

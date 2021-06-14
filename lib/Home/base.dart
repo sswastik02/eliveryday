@@ -14,7 +14,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 // routes are used to navigate between pages
 class HomeRoute extends StatefulWidget {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth;
+  HomeRoute(this._auth);
   HomeRouteState createState() => HomeRouteState();
 }
 
@@ -40,7 +41,7 @@ class HomeRouteState extends State<HomeRoute> {
         state: this,
       ),
       DisplayOrder(),
-      Profile(auth: widget._auth)
+      Profile(auth: widget._auth),
     ];
     return Scaffold(
       appBar: TopBar(
@@ -55,28 +56,7 @@ class HomeRouteState extends State<HomeRoute> {
               if (snapshot.data == 0) {
                 return _children[_currentIndex];
               } else {
-                return Container(
-                  color: Theme.of(context).backgroundColor,
-                  child: Center(
-                    child: Container(
-                      height: 200,
-                      child: Column(
-                        children: [
-                          Text(
-                            "You are Offline",
-                            style: TextStyle(color: Colors.red, fontSize: 20),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          styledButton(context, "Reload", () {
-                            setState(() {});
-                          })
-                        ],
-                      ),
-                    ),
-                  ),
-                );
+                return noInternetConnection(context, this);
               }
             } else {
               return Center(

@@ -40,6 +40,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   mapbox_search_flutter: ^1.0.6+1
   curved_navigation_bar: ^0.3.7
+  flutter_phoenix: ^1.0.0
  # flutter_google_places: ^0.3.0
 
 dev_dependencies:
