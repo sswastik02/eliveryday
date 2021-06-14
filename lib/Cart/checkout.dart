@@ -204,6 +204,7 @@ class CheckOutPageState extends State<CheckoutPage> {
                           ),
                         );
                         cartAddress = myMapsPage.returnAddress();
+                        cartCord = myMapsPage.returnCord();
                         // Updating cart address here
                       }
                     }),
