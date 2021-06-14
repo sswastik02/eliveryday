@@ -9,7 +9,8 @@ import '../Cart/cartInfo.dart';
 
 class Cart extends StatefulWidget {
   final FirebaseAuth _auth;
-  Cart(this._auth);
+  State? state;
+  Cart(this._auth, {this.state});
   CartState createState() => CartState();
 }
 
@@ -93,11 +94,14 @@ class CartState extends State<Cart> {
               print(res);
             }
             if (res != null) {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
+              await Navigator.push(context,
+                  MaterialPageRoute(builder: (context) {
                 return Scaffold(
                   body: CheckoutPage(widget._auth),
                 );
               }));
+              // awaiting for if the address changes and then setting state of home route which contains appbar
+              widget.state?.setState(() {});
             }
           },
           icon: Icon(Icons.exit_to_app),

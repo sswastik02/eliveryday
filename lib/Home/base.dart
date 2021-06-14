@@ -15,10 +15,10 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 // routes are used to navigate between pages
 class HomeRoute extends StatefulWidget {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  _HomeRouteState createState() => _HomeRouteState();
+  HomeRouteState createState() => HomeRouteState();
 }
 
-class _HomeRouteState extends State<HomeRoute> {
+class HomeRouteState extends State<HomeRoute> {
   String address = "Select Location";
   String previousAddress = "";
   MyMapsPage myMapsPage = MyMapsPage();
@@ -35,7 +35,10 @@ class _HomeRouteState extends State<HomeRoute> {
   Widget build(BuildContext context) {
     List<Widget> _children = [
       Home(),
-      Cart(widget._auth),
+      Cart(
+        widget._auth,
+        state: this,
+      ),
       DisplayOrder(),
       Profile(auth: widget._auth)
     ];
@@ -182,7 +185,8 @@ class _HomeRouteState extends State<HomeRoute> {
         alignment: Alignment.center,
         padding: EdgeInsets.only(left: 5, right: 5),
         child: Text(
-          address,
+          (cartAddress == '') ? address : cartAddress,
+          // modified to work with cartAddress global variable
           overflow: TextOverflow.ellipsis,
           maxLines: 1,
           style: TextStyle(fontSize: 15, color: Colors.white),

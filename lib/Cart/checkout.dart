@@ -2,6 +2,8 @@ import 'package:eliveryday/Cart/cartInfo.dart';
 import 'package:eliveryday/Cart/cartModel.dart';
 import 'package:eliveryday/FireBase/firebaseCustomServices.dart';
 import 'package:eliveryday/FireBase/styledbuttons.dart';
+import 'package:eliveryday/Home/base.dart';
+import 'package:eliveryday/Maps/maps.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -183,7 +185,7 @@ class CheckOutPageState extends State<CheckoutPage> {
                         setState(() {
                           loading = false;
                         });
-                        showDialog(
+                        await showDialog(
                             context: context,
                             builder: (context) {
                               Future.delayed(Duration(seconds: 1), () {
@@ -193,6 +195,16 @@ class CheckOutPageState extends State<CheckoutPage> {
                                 title: Text('Select a Location first'),
                               );
                             });
+                        // wait to show dialog then redirect to maps page
+                        MyMapsPage myMapsPage = MyMapsPage();
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => myMapsPage,
+                          ),
+                        );
+                        cartAddress = myMapsPage.returnAddress();
+                        // Updating cart address here
                       }
                     }),
             ),

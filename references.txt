@@ -21,3 +21,5 @@ https://cuneyt.aliustaoglu.biz/en/hide-your-api-keys-from-androidmanifest-xml-us
 https://medium.com/@ketanchoyal/create-a-custom-app-bar-flutter-e32164e0be6f
 
 https://pub.dev/packages/curved_navigation_bar
+
+https://stackoverflow.com/questions/64546212/dart-assigning-to-variable-right-away-or-in-constructor

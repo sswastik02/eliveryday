@@ -13,6 +13,7 @@ class User {
   });
   // All of them might not be initialised right now so they are in curly braces
 
+  // Named Constructor to return user from JSON
   User.fromJSON(Map<String, dynamic> data)
       : id = data['id'],
         fullName = data['fullName'],
