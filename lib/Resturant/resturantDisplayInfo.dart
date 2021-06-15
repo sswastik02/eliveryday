@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'FoodCard.dart';
 
-Widget photoAndTitle(String photo, String title, String imagesPath) {
+Widget photoAndTitle(String photo, String title, String address,
+    String imagesPath, double rating) {
   return Row(
     children: [
       SizedBox(
@@ -18,7 +19,7 @@ Widget photoAndTitle(String photo, String title, String imagesPath) {
             fit: BoxFit.fill,
           ),
         ),
-        borderRadius: BorderRadius.circular(100),
+        borderRadius: BorderRadius.circular(10),
       ),
       SizedBox(
         width: 10,
@@ -29,14 +30,61 @@ Widget photoAndTitle(String photo, String title, String imagesPath) {
         height: 100,
         alignment: Alignment.center,
         child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Text(
-            title,
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 25,
-            ),
+          scrollDirection: Axis.horizontal,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                maxLines: 1,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+              ),
+              Row(
+                children: [
+                  Icon(
+                    Icons.star,
+                    color: Colors.yellow,
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Text(
+                    rating.toString(),
+                    maxLines: 1,
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Icon(
+                    Icons.location_on,
+                    color: Colors.grey,
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Text(
+                    address,
+                    maxLines: 1,
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),

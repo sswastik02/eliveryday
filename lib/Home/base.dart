@@ -48,7 +48,7 @@ class HomeRouteState extends State<HomeRoute> {
         context: context,
         title: addressLocator(context),
       ),
-      bottomNavigationBar: customBottomBar(),
+      bottomNavigationBar: BottomBar(),
       body: FutureBuilder<Object>(
           future: checkInternetConnection(),
           builder: (context, snapshot) {
@@ -100,28 +100,68 @@ class HomeRouteState extends State<HomeRoute> {
     // );
   }
 
+  Widget BottomBar() {
+    return Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+              topRight: Radius.circular(30), topLeft: Radius.circular(30)),
+          boxShadow: [
+            BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 10),
+          ],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30.0),
+            topRight: Radius.circular(30.0),
+          ),
+          child: BottomNavigationBar(
+            currentIndex: _currentIndex,
+            onTap: onTabTapped,
+            type: BottomNavigationBarType.fixed,
+            items: <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: "Home",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.shopping_cart),
+                label: "Cart",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.list),
+                label: "Orders",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.account_circle),
+                label: "Account",
+              ),
+            ],
+          ),
+        ));
+  }
+
   CurvedNavigationBar customBottomBar() {
     return CurvedNavigationBar(
       items: [
         Icon(
           Icons.home,
-          color: (_currentIndex == 0) ? Colors.white : Colors.black,
+          color: (_currentIndex == 0) ? Colors.tealAccent : Colors.black,
         ),
         Icon(
           Icons.shopping_cart,
-          color: (_currentIndex == 1) ? Colors.white : Colors.black,
+          color: (_currentIndex == 1) ? Colors.tealAccent : Colors.black,
         ),
         Icon(
           Icons.list,
-          color: (_currentIndex == 2) ? Colors.white : Colors.black,
+          color: (_currentIndex == 2) ? Colors.tealAccent : Colors.black,
         ),
         Icon(
           Icons.account_circle,
-          color: (_currentIndex == 3) ? Colors.white : Colors.black,
+          color: (_currentIndex == 3) ? Colors.tealAccent : Colors.black,
         ),
       ],
       backgroundColor: Theme.of(context).backgroundColor,
-      color: Theme.of(context).primaryColor,
+      color: Colors.white,
       onTap: onTabTapped,
       height: (MediaQuery.of(context).size.height * 0.1 > 70)
           ? 70
@@ -173,5 +213,49 @@ class HomeRouteState extends State<HomeRoute> {
         ),
       ),
     );
+  }
+}
+
+class BottomBar extends StatefulWidget {
+  BottomBarState createState() => BottomBarState();
+}
+
+class BottomBarState extends State<BottomBar> {
+  Widget build(BuildContext context) {
+    return Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+              topRight: Radius.circular(30), topLeft: Radius.circular(30)),
+          boxShadow: [
+            BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 10),
+          ],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30.0),
+            topRight: Radius.circular(30.0),
+          ),
+          child: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            items: <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: "Favorite",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.shopping_cart),
+                label: "Favotier",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.list),
+                label: "Favotier",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.account_circle),
+                label: "Favotier",
+              ),
+            ],
+          ),
+        ));
   }
 }

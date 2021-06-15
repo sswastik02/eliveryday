@@ -5,9 +5,11 @@ import 'resturantDisplayInfo.dart';
 class ResturantView extends StatefulWidget {
   String resturantTitle;
   String image;
+  String address;
   List<Food> foodItems;
+  double rating;
   final String imagesPath = "lib/Resturant/resturantImages/";
-  ResturantView(this.foodItems,
+  ResturantView(this.foodItems, this.address, this.rating,
       {this.resturantTitle = "Resturant", this.image = "defaultResturant.jpg"});
   ResturantViewState createState() => ResturantViewState();
 }
@@ -34,8 +36,8 @@ class ResturantViewState extends State<ResturantView> {
                       borderRadius: BorderRadius.all(Radius.circular(10))),
                   child: FittedBox(
                     fit: BoxFit.fitWidth,
-                    child: photoAndTitle(
-                        widget.image, widget.resturantTitle, widget.imagesPath),
+                    child: photoAndTitle(widget.image, widget.resturantTitle,
+                        widget.address, widget.imagesPath, widget.rating),
                   ),
                 ),
               ),

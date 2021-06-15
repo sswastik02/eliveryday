@@ -10,15 +10,17 @@ class Food {
   final String description;
   final bool veg;
   final LatLng resturantCord;
+  final List<String> category;
   int quantity;
   Food({
-    this.foodItemName = "Unknown",
+    required this.foodItemName,
     this.veg = true,
     this.measureByPieces = true,
     this.image = "defaultFood.jpeg",
     this.pricePerMeasure = 10.0,
     this.description = "Coming soon ..........",
     this.quantity = 0,
+    required this.category,
     required this.resturantCord,
   });
 }

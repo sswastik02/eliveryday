@@ -1,3 +1,4 @@
+import 'package:eliveryday/Resturant/categoryCard.dart';
 import 'package:flutter/material.dart';
 
 import '../Resturant/resturantCard.dart';
@@ -17,7 +18,7 @@ class HomeState extends State<Home> {
       ),
       child: Stack(
         children: [
-          resturantTitle(),
+          categoryListDisplay(),
           resturantListDisplay(context),
         ],
       ),
@@ -47,20 +48,50 @@ class HomeState extends State<Home> {
     );
   }
 
+  Widget categoryListDisplay() {
+    Map<int, Color> categoryColor = {
+      0: Colors.purple.shade100,
+      1: Colors.pink.shade100,
+      2: Colors.green.shade100,
+      3: Colors.blue.shade100,
+      4: Colors.yellow.shade100,
+    };
+    int i = 0;
+    return Positioned(
+      top: MediaQuery.of(context).size.height * 0.01,
+      left: 10,
+      height: MediaQuery.of(context).size.height * 0.25,
+      width: MediaQuery.of(context).size.width * 0.95,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+            children: foodCategories.map((category) {
+          i = (i + 1) % 5;
+          return CategoryCard(
+            category: category,
+            color: categoryColor[i]!,
+          );
+        }).toList()),
+      ),
+    );
+  }
+
   Widget resturantListDisplay(BuildContext context) {
     return Positioned(
       // List of resturant card
-      top: MediaQuery.of(context).size.height * 0.1,
-      height: MediaQuery.of(context).size.height * 0.65,
+      top: MediaQuery.of(context).size.height * 0.3,
+      height: MediaQuery.of(context).size.height * 0.45,
       width: MediaQuery.of(context).size.width,
       child: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Column(
           children: resturanAllInfo.map((resturant) {
             return ResturantCard(
-              resturant[0],
-              resturantTitle: resturant[1] == "" ? "Restaurant" : resturant[1],
-              image: resturant[2] == "" ? "defaultResturant.jpg" : resturant[2],
+              resturant.foodList,
+              resturant.address,
+              resturant.rating,
+              resturantTitle: resturant.name,
+              image: resturant.image,
             );
           }).toList(),
         ),

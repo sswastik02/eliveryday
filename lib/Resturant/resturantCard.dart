@@ -9,7 +9,9 @@ class ResturantCard extends StatelessWidget {
   final String resturantTitle;
   final String image;
   final List<Food> foodItems;
-  ResturantCard(this.foodItems,
+  final String address;
+  final double rating;
+  ResturantCard(this.foodItems, this.address, this.rating,
       {this.resturantTitle = "Resturant", this.image = "defaultResturant.jpg"});
   final String imagesPath = "lib/Resturant/resturantImages/";
 
@@ -21,16 +23,17 @@ class ResturantCard extends StatelessWidget {
         height: MediaQuery.of(context).size.height * 0.2,
         margin: EdgeInsets.only(bottom: 10),
         child: Card(
+          color: Theme.of(context).backgroundColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(
               Radius.circular(10),
             ),
           ),
-          elevation: 10,
-          color: Theme.of(context).primaryColor,
+          elevation: 0,
           child: FittedBox(
             fit: BoxFit.fitWidth,
-            child: photoAndTitle(image, resturantTitle, imagesPath),
+            child: photoAndTitle(
+                image, resturantTitle, address, imagesPath, rating),
           ),
         ),
       ),
@@ -41,6 +44,8 @@ class ResturantCard extends StatelessWidget {
             builder: (context) {
               ResturantView resturantView = ResturantView(
                 foodItems,
+                address,
+                rating,
                 resturantTitle: resturantTitle,
                 image: image,
               );

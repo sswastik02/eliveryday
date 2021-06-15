@@ -11,11 +11,10 @@ Future<void> main() async {
   runApp(Phoenix(
     child: MaterialApp(
       theme: ThemeData(
-        primarySwatch: Colors.green,
-        primaryColor: Colors.green[900],
-        fontFamily: 'PlayFair',
-        backgroundColor: Color.fromRGBO(243, 176, 115, 0.8),
-      ),
+          primarySwatch: Colors.teal,
+          primaryColor: Colors.teal[100],
+          fontFamily: 'PlayFair',
+          backgroundColor: Colors.grey.shade100),
       home: MyApp(),
     ),
   ));
