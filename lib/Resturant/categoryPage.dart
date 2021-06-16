@@ -49,6 +49,7 @@ class CategoryResturant extends StatelessWidget {
                         resturant.resturantCord,
                         resturantTitle: resturant.name,
                         image: resturant.image,
+                        category: category,
                       );
                     }).toList(),
                   ),

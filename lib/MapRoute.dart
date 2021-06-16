@@ -23,7 +23,7 @@ class RouteInfo {
   double duration() {
     if (response != null) {
       var duration = response['routes'][0]['legs'][0]['duration'];
-      return duration;
+      return duration.toDouble();
     }
     return -1;
   }

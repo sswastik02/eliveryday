@@ -17,6 +17,7 @@ class ResturantView extends StatefulWidget {
   List<Food> foodItems;
   double rating;
   LatLng resturantCord;
+  String category;
   late RouteInfo routeInfo;
   double time;
 
@@ -29,6 +30,7 @@ class ResturantView extends StatefulWidget {
     this.resturantTitle = "Resturant",
     this.image = "defaultResturant.jpg",
     this.time = -1,
+    this.category = "All",
   });
   ResturantViewState createState() => ResturantViewState();
 }
@@ -47,6 +49,8 @@ class ResturantViewState extends State<ResturantView> {
         widget.foodItems.map((food) => food.pricePerMeasure).toList(), 5);
     categories = {"All": widget.foodItems};
     categories.addAll(resturantCategories());
+    categoryIndex = categories.keys.toList().indexOf(widget.category);
+    categoryFoodItems = categories[widget.category] ?? widget.foodItems;
 
     super.initState();
   }
@@ -245,7 +249,10 @@ class ResturantViewState extends State<ResturantView> {
           icondata,
           color: iconColor,
         ),
-        label: Text(data),
+        label: Text(
+          data,
+          style: TextStyle(fontSize: 15),
+        ),
         elevation: 5,
       ),
     );
@@ -255,8 +262,11 @@ class ResturantViewState extends State<ResturantView> {
     return Container(
       margin: EdgeInsets.only(left: 5, right: 5),
       child: ChoiceChip(
-        label: Text(category),
-        labelStyle: TextStyle(color: Colors.white),
+        label: Text(
+          category,
+          style: TextStyle(fontSize: 15),
+        ),
+        labelStyle: TextStyle(color: Colors.white, fontSize: 20),
         selected: categoryIndex == index,
         selectedColor: Colors.teal[400],
         onSelected: (bool selected) {
@@ -319,45 +329,53 @@ class ResturantViewState extends State<ResturantView> {
         RouteInfo(initalPos: cartCord, finalPos: widget.resturantCord);
     widget.routeInfo.generateUri();
     return (widget.time == -1)
-        ? FutureBuilder(
-            future: widget.routeInfo.getData(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                if (snapshot.data == true) {
-                  widget.time = widget.routeInfo.duration();
+        ? (cartCord != LatLng(0, 0))
+            ? FutureBuilder(
+                future: widget.routeInfo.getData(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    if (snapshot.data == true) {
+                      widget.time = widget.routeInfo.duration();
 
-                  double distance = widget.routeInfo.distance();
+                      double distance = widget.routeInfo.distance();
 
-                  print([widget.time, distance]);
-                  try {
-                    if (widget.time != -1.0 && distance <= 3745000) {
-                      // THe above number is the longest road distance
-                      List<int> timeRange = getRange([widget.time / 60], 5);
-                      return resturantDetailsNoButton(
-                        icondata: Icons.access_time,
-                        iconColor: Colors.grey.shade500,
-                        data: "${timeRange[0]} - ${timeRange[1]} min",
-                      );
+                      print([widget.time, distance]);
+                      try {
+                        if (widget.time != -1.0 && distance <= 3745000) {
+                          // THe above number is the longest road distance
+                          List<int> timeRange = getRange([widget.time / 60], 5);
+                          return resturantDetailsNoButton(
+                            icondata: Icons.access_time,
+                            iconColor: Colors.grey.shade500,
+                            data: "${timeRange[0]} - ${timeRange[1]} min",
+                          );
+                        }
+                        widget.time = -1;
+                        return resturantDetailsNoButton(
+                          icondata: Icons.access_time,
+                          iconColor: Colors.grey.shade500,
+                          data: "Not Deliverable",
+                        );
+                      } catch (e) {
+                        widget.time = -1;
+                        return resturantDetailsNoButton(
+                          icondata: Icons.access_time,
+                          iconColor: Colors.grey.shade500,
+                          data: "Not Deliverable",
+                        );
+                      }
                     }
-                    widget.time = -1;
-                    return resturantDetailsNoButton(
-                      icondata: Icons.access_time,
-                      iconColor: Colors.grey.shade500,
-                      data: "Not Deliverable",
-                    );
-                  } catch (e) {
-                    widget.time = -1;
-                    return resturantDetailsNoButton(
-                      icondata: Icons.access_time,
-                      iconColor: Colors.grey.shade500,
-                      data: "Not Deliverable",
-                    );
                   }
-                }
-              }
-              return CircularProgressIndicator();
-            },
-          )
+                  return Container(
+                      margin: EdgeInsets.only(left: 15, right: 15),
+                      child: CircularProgressIndicator());
+                },
+              )
+            : resturantDetailsNoButton(
+                icondata: Icons.access_time,
+                iconColor: Colors.grey.shade500,
+                data: "Choose Location",
+              )
         : resturantDetailsNoButton(
             icondata: Icons.access_time,
             iconColor: Colors.grey.shade500,

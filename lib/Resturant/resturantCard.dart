@@ -13,8 +13,11 @@ class ResturantCard extends StatelessWidget {
   final String address;
   final double rating;
   final LatLng resturantCord;
+  final String category;
   ResturantCard(this.foodItems, this.address, this.rating, this.resturantCord,
-      {this.resturantTitle = "Resturant", this.image = "defaultResturant.jpg"});
+      {this.resturantTitle = "Resturant",
+      this.image = "defaultResturant.jpg",
+      this.category = "All"});
   final String imagesPath = "lib/Resturant/resturantImages/";
 
   @override
@@ -51,6 +54,7 @@ class ResturantCard extends StatelessWidget {
                 rating,
                 resturantTitle: resturantTitle,
                 image: image,
+                category: category,
               );
               return resturantView;
             },

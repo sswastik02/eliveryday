@@ -72,7 +72,7 @@ class FoodCardTemplateState extends State<FoodCardTemplate> {
             // Food Image
             Positioned(
               top: MediaQuery.of(context).size.height * 0.02,
-              left: 5,
+              left: 0,
               child: Container(
                 child: ClipRRect(
                   borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -128,25 +128,29 @@ class FoodCardTemplateState extends State<FoodCardTemplate> {
               //PRICE
               bottom: 13,
               left: MediaQuery.of(context).size.width * 0.35,
+              width: MediaQuery.of(context).size.width * 0.28,
               child: Container(
                 padding: EdgeInsets.all(5),
-                child: widget.foodData.measureByPieces
-                    ? Text(
-                        '\u{20B9} ${widget.foodData.pricePerMeasure} / Plate',
-                        style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.grey[700],
+                child: FittedBox(
+                  fit: BoxFit.fitWidth,
+                  child: widget.foodData.measureByPieces
+                      ? Text(
+                          '\u{20B9} ${widget.foodData.pricePerMeasure} / Plate',
+                          style: TextStyle(
+                            fontSize: 100,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey[700],
+                          ),
+                        )
+                      : Text(
+                          '\u{20B9} ${widget.foodData.pricePerMeasure} / Bowl',
+                          style: TextStyle(
+                            fontSize: 100,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey[700],
+                          ),
                         ),
-                      )
-                    : Text(
-                        '\u{20B9} ${widget.foodData.pricePerMeasure} / Bowl',
-                        style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.grey[700],
-                        ),
-                      ),
+                ),
               ),
             ),
             Positioned(
