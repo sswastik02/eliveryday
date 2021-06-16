@@ -1,4 +1,6 @@
 import 'package:eliveryday/Resturant/FoodCard.dart';
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class SingleResturantInfo {
@@ -157,12 +159,12 @@ List<SingleResturantInfo> resturanAllInfo = [
       rating: 4.9),
 ];
 
-List<String> foodCategories = [
-  "Indian",
-  "Kebab",
-  "Soup",
-  "Veggies",
-  "Healthy",
-  "Seafood",
-  "Bread"
-];
+Map<String, IconData> foodCategories = {
+  "Indian": FontAwesomeIcons.rupeeSign,
+  "Kebab": FontAwesomeIcons.drumstickBite,
+  "Soup": FontAwesomeIcons.hotTub,
+  "Veggies": FontAwesomeIcons.carrot,
+  "Healthy": FontAwesomeIcons.walking,
+  "Seafood": FontAwesomeIcons.fish,
+  "Bread": FontAwesomeIcons.breadSlice,
+};

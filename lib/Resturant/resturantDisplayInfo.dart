@@ -25,10 +25,10 @@ Widget photoAndTitle(String photo, String title, String address,
         width: 10,
       ),
       Container(
-        // Scrollable Resturant Name
+        // Scrollable Resturant Name Location and Rating
         width: 230,
         height: 100,
-        alignment: Alignment.center,
+        //alignment: Alignment.center, Error causing in space
         child: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Column(
@@ -48,7 +48,7 @@ Widget photoAndTitle(String photo, String title, String address,
                 children: [
                   Icon(
                     Icons.star,
-                    color: Colors.yellow,
+                    color: Colors.yellow.shade600,
                   ),
                   SizedBox(
                     width: 5,
@@ -92,10 +92,13 @@ Widget photoAndTitle(String photo, String title, String address,
   );
 }
 
-Widget foodList(List<Food> foods) {
-  return SingleChildScrollView(
-    padding: EdgeInsets.only(bottom: 20),
-    child: Column(
-        children: foods.map((foodData) => FoodCardTemplate(foodData)).toList()),
-  );
+Widget foodList(List<Food> foods, {bool scroll = true}) {
+  Widget list = Column(
+      children: foods.map((foodData) => FoodCardTemplate(foodData)).toList());
+  return scroll
+      ? SingleChildScrollView(
+          padding: EdgeInsets.only(bottom: 20),
+          child: list,
+        )
+      : list;
 }

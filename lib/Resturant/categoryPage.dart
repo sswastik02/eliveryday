@@ -46,6 +46,7 @@ class CategoryResturant extends StatelessWidget {
                         resturant.foodList,
                         resturant.address,
                         resturant.rating,
+                        resturant.resturantCord,
                         resturantTitle: resturant.name,
                         image: resturant.image,
                       );

@@ -31,7 +31,7 @@ class RouteInfo {
   double distance() {
     if (response != null) {
       var distance = response['routes'][0]['legs'][0]['distance'];
-      return distance;
+      return distance.toDouble();
     }
     return -1;
   }

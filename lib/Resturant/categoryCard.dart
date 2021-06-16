@@ -2,12 +2,15 @@ import 'package:eliveryday/Resturant/categoryPage.dart';
 import 'package:eliveryday/Resturant/resturantInfo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CategoryCard extends StatelessWidget {
   final String category;
   final Color color;
+  final IconData iconData;
   List<SingleResturantInfo> categoryResturants = [];
-  CategoryCard({required this.category, required this.color});
+  CategoryCard(
+      {required this.category, required this.color, required this.iconData});
 
   int placesFromCategory() {
     int count = 0;
@@ -85,11 +88,14 @@ class CategoryCard extends StatelessWidget {
               height: MediaQuery.of(context).size.width * 0.21 * 0.5,
               child: Card(
                   elevation: 15,
-                  child: FittedBox(
-                    child: Icon(
-                      Icons.food_bank_outlined,
-                      size: 300,
-                      color: color,
+                  child: Padding(
+                    padding: EdgeInsets.all(5),
+                    child: FittedBox(
+                      child: FaIcon(
+                        iconData,
+                        color: color,
+                        size: 300,
+                      ),
                     ),
                   )),
             ),

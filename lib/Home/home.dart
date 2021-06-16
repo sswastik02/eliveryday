@@ -54,7 +54,7 @@ class HomeState extends State<Home> {
       1: Colors.pink.shade100,
       2: Colors.green.shade100,
       3: Colors.blue.shade100,
-      4: Colors.yellow.shade100,
+      4: Colors.yellow.shade700,
     };
     int i = 0;
     return Positioned(
@@ -65,11 +65,12 @@ class HomeState extends State<Home> {
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(
-            children: foodCategories.map((category) {
+            children: foodCategories.keys.map((category) {
           i = (i + 1) % 5;
           return CategoryCard(
             category: category,
             color: categoryColor[i]!,
+            iconData: foodCategories[category]!,
           );
         }).toList()),
       ),
@@ -90,6 +91,7 @@ class HomeState extends State<Home> {
               resturant.foodList,
               resturant.address,
               resturant.rating,
+              resturant.resturantCord,
               resturantTitle: resturant.name,
               image: resturant.image,
             );

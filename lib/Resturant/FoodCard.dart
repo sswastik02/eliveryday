@@ -60,29 +60,29 @@ class FoodCardTemplateState extends State<FoodCardTemplate> {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(top: 5, bottom: 5),
-      height: 320,
-      width: MediaQuery.of(context).size.width * 0.92,
+      height: MediaQuery.of(context).size.height * 0.23,
+      width: MediaQuery.of(context).size.width,
       child: Card(
-        elevation: 5,
-        color: Theme.of(context).primaryColor,
+        elevation: 0,
+        color: Theme.of(context).backgroundColor,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(10))),
         child: Stack(
           children: [
             // Food Image
             Positioned(
+              top: MediaQuery.of(context).size.height * 0.02,
+              left: 5,
               child: Container(
                 child: ClipRRect(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      topRight: Radius.circular(10)),
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
                   child: Container(
-                    height: 250,
-                    width: MediaQuery.of(context).size.width * 0.92,
+                    height: MediaQuery.of(context).size.height * 0.18,
+                    width: MediaQuery.of(context).size.height * 0.18,
                     child: Image.asset(
                       widget.imagesPath + widget.foodData.image,
                       fit: BoxFit.fill,
-                      // Aspect Ratio is maintained
+                      // Aspect Ratio is not maintained
                     ),
                   ),
                 ),
@@ -90,71 +90,61 @@ class FoodCardTemplateState extends State<FoodCardTemplate> {
             ),
             Positioned(
               //NAME
-              left: 20,
-              top: 30,
+              left: MediaQuery.of(context).size.width * 0.35,
+              top: MediaQuery.of(context).size.height * 0.025,
               width: MediaQuery.of(context).size.width * 0.7,
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Text(
                   widget.foodData.foodItemName,
                   style: TextStyle(
-                      backgroundColor: Colors.amber,
-                      color: Colors.red.shade900,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold),
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
             Positioned(
               // DESCRIPTION
-              top: 70,
-              left: 20,
-              width: MediaQuery.of(context).size.width * 0.7,
-              height: 80,
+              left: MediaQuery.of(context).size.width * 0.35,
+              top: MediaQuery.of(context).size.height * 0.07,
+              width: MediaQuery.of(context).size.width * 0.6,
+              height: 41,
               // height is set so that it shows there is text below
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 child: Text(
                   widget.foodData.description,
                   style: TextStyle(
-                    backgroundColor: Colors.black,
-                    color: Colors.white,
+                    color: Colors.grey,
+                    fontSize: 15,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
               ),
             ),
-            Positioned(
-              //VEGNONVEG
-              top: 5,
-              right: 10,
-              child: vegOrNonVeg(veg: widget.foodData.veg),
-            ),
+
             Positioned(
               //PRICE
               bottom: 13,
-              left: 10,
+              left: MediaQuery.of(context).size.width * 0.35,
               child: Container(
                 padding: EdgeInsets.all(5),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                  border: Border.all(color: Colors.white),
-                ),
                 child: widget.foodData.measureByPieces
                     ? Text(
                         '\u{20B9} ${widget.foodData.pricePerMeasure} / Plate',
                         style: TextStyle(
-                          fontSize: 15,
+                          fontSize: 13,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          color: Colors.grey[700],
                         ),
                       )
                     : Text(
                         '\u{20B9} ${widget.foodData.pricePerMeasure} / Bowl',
                         style: TextStyle(
-                          fontSize: 15,
+                          fontSize: 13,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          color: Colors.grey[700],
                         ),
                       ),
               ),
@@ -162,11 +152,12 @@ class FoodCardTemplateState extends State<FoodCardTemplate> {
             Positioned(
               // BUTTON
               bottom: 5,
+              width: MediaQuery.of(context).size.width * 0.3,
               right: 5,
               child: (widget.foodData.quantity == 0)
                   ? _buttonNoCount()
                   : _buttonCount(),
-            )
+            ),
           ],
         ),
       ),
@@ -179,7 +170,7 @@ class FoodCardTemplateState extends State<FoodCardTemplate> {
         borderRadius: BorderRadius.all(
           Radius.circular(20),
         ),
-        side: BorderSide(color: Colors.white),
+        side: BorderSide(color: Colors.black),
       ),
       onPressed: (widget.foodData.foodItemName == "Unknown" ||
               (cartAllInfo.length != 0
@@ -202,21 +193,37 @@ class FoodCardTemplateState extends State<FoodCardTemplate> {
                 print(cartAllInfo.length);
               });
             },
-      color: Theme.of(context).primaryColor,
+      color: Colors.white,
       disabledColor: Colors.grey,
       child: Row(
         children: [
-          Icon(
-            Icons.add_circle_outline,
-            color: Colors.white,
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.3 * 1 / 5,
+            child: FittedBox(
+              fit: BoxFit.fitWidth,
+              child: Icon(
+                Icons.add_circle_outline,
+                color: Colors.black,
+                size: 400,
+              ),
+            ),
           ),
           SizedBox(
             width: 5,
           ),
-          Text(
-            "Add Item",
-            style: TextStyle(
-                color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.3 * 0.455,
+            child: FittedBox(
+              fit: BoxFit.fitWidth,
+              child: Text(
+                "Add Item",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 11,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
           ),
         ],
       ),
@@ -225,7 +232,6 @@ class FoodCardTemplateState extends State<FoodCardTemplate> {
 
   Widget _buttonCount() {
     return Container(
-      width: 125,
       height: 50,
       child: FittedBox(
         fit: BoxFit.fitHeight,
@@ -233,11 +239,73 @@ class FoodCardTemplateState extends State<FoodCardTemplate> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            MaterialButton(
-              shape: CircleBorder(side: BorderSide(color: Colors.white)),
-              minWidth: 15,
-              color: Theme.of(context).primaryColor,
-              onPressed: () {
+            GestureDetector(
+              child: SizedBox(
+                width: 25,
+                height: 25,
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(5),
+                    ),
+                  ),
+                  color: Colors.white,
+                  child: Container(
+                    child: Icon(
+                      Icons.add,
+                      size: 11,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ),
+              onTap: () {
+                setState(() {
+                  print(cartAllInfo.remove(widget.foodData));
+                  // remove if exists
+                  widget.foodData.quantity++;
+                  // adding to cart
+                  cartAllInfo.add(widget.foodData);
+
+                  print(cartAllInfo.length);
+                });
+              },
+            ),
+            SizedBox(
+              width: 7,
+              child: FittedBox(
+                fit: BoxFit.fitWidth,
+                child: Text(
+                  "${widget.foodData.quantity}",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 9,
+                      fontWeight: FontWeight.bold,
+                      height: 1),
+                ),
+              ),
+            ),
+            GestureDetector(
+              child: SizedBox(
+                width: 25,
+                height: 25,
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(5),
+                    ),
+                  ),
+                  color: Colors.white,
+                  child: Container(
+                    child: Icon(
+                      Icons.remove,
+                      size: 11,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ),
+              onTap: () {
                 setState(() {
                   print(cartAllInfo.remove(widget.foodData));
                   // remove if exists
@@ -250,44 +318,6 @@ class FoodCardTemplateState extends State<FoodCardTemplate> {
                   print(cartAllInfo.length);
                 });
               },
-              child: Container(
-                child: Icon(
-                  Icons.remove,
-                  size: 20,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-            Text(
-              "${widget.foodData.quantity}",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  height: 1),
-            ),
-            MaterialButton(
-              shape: CircleBorder(side: BorderSide(color: Colors.white)),
-              color: Theme.of(context).primaryColor,
-              minWidth: 15,
-              onPressed: () {
-                setState(() {
-                  print(cartAllInfo.remove(widget.foodData));
-                  // remove if exists
-                  widget.foodData.quantity++;
-                  // adding to cart
-                  cartAllInfo.add(widget.foodData);
-
-                  print(cartAllInfo.length);
-                });
-              },
-              child: Container(
-                child: Icon(
-                  Icons.add,
-                  size: 20,
-                  color: Colors.white,
-                ),
-              ),
             ),
           ],
         ),

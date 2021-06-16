@@ -7,6 +7,7 @@ import 'package:eliveryday/Home/home.dart';
 import 'package:eliveryday/FireBase/styledbuttons.dart';
 import 'package:eliveryday/customAppBar.dart';
 import 'package:eliveryday/Orders/orders.dart';
+import 'package:eliveryday/customBottomNavigationBar.dart';
 import 'package:eliveryday/profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -24,11 +25,11 @@ class HomeRouteState extends State<HomeRoute> {
   String previousAddress = "";
   MyMapsPage myMapsPage = MyMapsPage();
 
-  int _currentIndex = 0;
+  int currentIndex = 0;
 
   void onTabTapped(int index) {
     setState(() {
-      _currentIndex = index;
+      currentIndex = index;
     });
   }
 
@@ -48,13 +49,13 @@ class HomeRouteState extends State<HomeRoute> {
         context: context,
         title: addressLocator(context),
       ),
-      bottomNavigationBar: BottomBar(),
+      bottomNavigationBar: BottomBar(onTabTapped, currentIndex),
       body: FutureBuilder<Object>(
           future: checkInternetConnection(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               if (snapshot.data == 0) {
-                return _children[_currentIndex];
+                return _children[currentIndex];
               } else {
                 return noInternetConnection(context, this);
               }
@@ -100,64 +101,24 @@ class HomeRouteState extends State<HomeRoute> {
     // );
   }
 
-  Widget BottomBar() {
-    return Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-              topRight: Radius.circular(30), topLeft: Radius.circular(30)),
-          boxShadow: [
-            BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 10),
-          ],
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(30.0),
-            topRight: Radius.circular(30.0),
-          ),
-          child: BottomNavigationBar(
-            currentIndex: _currentIndex,
-            onTap: onTabTapped,
-            type: BottomNavigationBarType.fixed,
-            items: <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: "Home",
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.shopping_cart),
-                label: "Cart",
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.list),
-                label: "Orders",
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.account_circle),
-                label: "Account",
-              ),
-            ],
-          ),
-        ));
-  }
-
   CurvedNavigationBar customBottomBar() {
     return CurvedNavigationBar(
       items: [
         Icon(
           Icons.home,
-          color: (_currentIndex == 0) ? Colors.tealAccent : Colors.black,
+          color: (currentIndex == 0) ? Colors.tealAccent : Colors.black,
         ),
         Icon(
           Icons.shopping_cart,
-          color: (_currentIndex == 1) ? Colors.tealAccent : Colors.black,
+          color: (currentIndex == 1) ? Colors.tealAccent : Colors.black,
         ),
         Icon(
           Icons.list,
-          color: (_currentIndex == 2) ? Colors.tealAccent : Colors.black,
+          color: (currentIndex == 2) ? Colors.tealAccent : Colors.black,
         ),
         Icon(
           Icons.account_circle,
-          color: (_currentIndex == 3) ? Colors.tealAccent : Colors.black,
+          color: (currentIndex == 3) ? Colors.tealAccent : Colors.black,
         ),
       ],
       backgroundColor: Theme.of(context).backgroundColor,
@@ -213,49 +174,5 @@ class HomeRouteState extends State<HomeRoute> {
         ),
       ),
     );
-  }
-}
-
-class BottomBar extends StatefulWidget {
-  BottomBarState createState() => BottomBarState();
-}
-
-class BottomBarState extends State<BottomBar> {
-  Widget build(BuildContext context) {
-    return Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-              topRight: Radius.circular(30), topLeft: Radius.circular(30)),
-          boxShadow: [
-            BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 10),
-          ],
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(30.0),
-            topRight: Radius.circular(30.0),
-          ),
-          child: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            items: <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: "Favorite",
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.shopping_cart),
-                label: "Favotier",
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.list),
-                label: "Favotier",
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.account_circle),
-                label: "Favotier",
-              ),
-            ],
-          ),
-        ));
   }
 }

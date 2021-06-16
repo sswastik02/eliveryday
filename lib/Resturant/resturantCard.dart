@@ -1,6 +1,7 @@
 import 'package:eliveryday/Resturant/resturantDisplayInfo.dart';
 
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'FoodCard.dart';
 import 'singleResturantView.dart';
@@ -11,7 +12,8 @@ class ResturantCard extends StatelessWidget {
   final List<Food> foodItems;
   final String address;
   final double rating;
-  ResturantCard(this.foodItems, this.address, this.rating,
+  final LatLng resturantCord;
+  ResturantCard(this.foodItems, this.address, this.rating, this.resturantCord,
       {this.resturantTitle = "Resturant", this.image = "defaultResturant.jpg"});
   final String imagesPath = "lib/Resturant/resturantImages/";
 
@@ -45,6 +47,7 @@ class ResturantCard extends StatelessWidget {
               ResturantView resturantView = ResturantView(
                 foodItems,
                 address,
+                resturantCord,
                 rating,
                 resturantTitle: resturantTitle,
                 image: image,
