@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
-Widget BottomBar(void Function(int)? onTabTapped, int currentIndex) {
+Widget BottomBar(
+    BuildContext context, void Function(int)? onTabTapped, int currentIndex) {
   return Container(
+      height: MediaQuery.of(context).size.height * 0.1,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(
             topRight: Radius.circular(30), topLeft: Radius.circular(30)),

@@ -1,8 +1,10 @@
+import 'package:eliveryday/Internet.dart';
 import 'package:eliveryday/splash.dart';
 import 'package:eliveryday/welcome.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:flutter/services.dart';
 
 import 'Home/base.dart';
 
@@ -39,12 +41,20 @@ class MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     return FutureBuilder(
-        future: widget._auth.currentUser(),
+        future: checkInternetConnection(),
         builder: (context, snapshot) {
-          return (snapshot.hasData)
-              ? HomeRoute(widget._auth)
-              : WelcomeScreen(widget._auth, this);
+          if (snapshot.hasData && snapshot.data == 0) {
+            return FutureBuilder(
+                future: widget._auth.currentUser(),
+                builder: (context, snapshot) {
+                  return (snapshot.hasData)
+                      ? HomeRoute(widget._auth)
+                      : WelcomeScreen(widget._auth, this);
+                });
+          }
+          return noInternetConnection(context, this);
         });
   }
 }

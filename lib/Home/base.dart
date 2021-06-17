@@ -49,7 +49,7 @@ class HomeRouteState extends State<HomeRoute> {
         context: context,
         title: addressLocator(context),
       ),
-      bottomNavigationBar: BottomBar(onTabTapped, currentIndex),
+      bottomNavigationBar: BottomBar(context, onTabTapped, currentIndex),
       body: FutureBuilder<Object>(
           future: checkInternetConnection(),
           builder: (context, snapshot) {

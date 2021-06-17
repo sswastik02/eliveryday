@@ -92,9 +92,14 @@ Widget photoAndTitle(String photo, String title, String address,
   );
 }
 
-Widget foodList(List<Food> foods, {bool scroll = true}) {
+Widget foodList(List<Food> foods, {bool scroll = true, State? state}) {
   Widget list = Column(
-      children: foods.map((foodData) => FoodCardTemplate(foodData)).toList());
+      children: foods
+          .map((foodData) => FoodCardTemplate(
+                foodData,
+                state: state,
+              ))
+          .toList());
   return scroll
       ? SingleChildScrollView(
           padding: EdgeInsets.only(bottom: 20),

@@ -3,8 +3,9 @@ import 'dart:math';
 import 'package:eliveryday/Cart/cartInfo.dart';
 import 'package:eliveryday/Home/base.dart';
 import 'package:eliveryday/Home/home.dart';
-import 'package:eliveryday/MapRoute.dart';
+import 'package:eliveryday/Maps/MapRoute.dart';
 import 'package:eliveryday/Resturant/FoodCard.dart';
+import 'package:eliveryday/Resturant/resturantInfo.dart';
 import 'package:eliveryday/customBottomNavigationBar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -262,6 +263,13 @@ class ResturantViewState extends State<ResturantView> {
     return Container(
       margin: EdgeInsets.only(left: 5, right: 5),
       child: ChoiceChip(
+        avatar: (category == "All")
+            ? null
+            : Icon(
+                foodCategories[category],
+                color: categoryIndex == index ? Colors.white : Colors.grey[600],
+                size: 15,
+              ),
         label: Text(
           category,
           style: TextStyle(fontSize: 15),
@@ -342,7 +350,7 @@ class ResturantViewState extends State<ResturantView> {
                       print([widget.time, distance]);
                       try {
                         if (widget.time != -1.0 && distance <= 3745000) {
-                          // THe above number is the longest road distance
+                          // THe above number is the longest road distance in India
                           List<int> timeRange = getRange([widget.time / 60], 5);
                           return resturantDetailsNoButton(
                             icondata: Icons.access_time,

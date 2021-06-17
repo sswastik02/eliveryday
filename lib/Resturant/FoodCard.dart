@@ -29,8 +29,8 @@ class FoodCardTemplate extends StatefulWidget {
   // This Widget Creates a Card with the following parameters
   Food foodData;
   final String imagesPath = "lib/Resturant/resturantImages/";
-
-  FoodCardTemplate(this.foodData);
+  State? state;
+  FoodCardTemplate(this.foodData, {this.state});
   @override
   FoodCardTemplateState createState() => FoodCardTemplateState();
 }
@@ -317,6 +317,8 @@ class FoodCardTemplateState extends State<FoodCardTemplate> {
                   // adding to cart
                   if (widget.foodData.quantity > 0) {
                     cartAllInfo.add(widget.foodData);
+                  } else {
+                    widget.state?.setState(() {});
                   }
 
                   print(cartAllInfo.length);

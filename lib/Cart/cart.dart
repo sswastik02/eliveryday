@@ -1,6 +1,7 @@
 import 'package:eliveryday/Cart/checkout.dart';
 import 'package:eliveryday/FireBase/firebaseCustomServices.dart';
 import 'package:eliveryday/FireBase/phoneauth.dart';
+import 'package:eliveryday/Resturant/FoodCard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -19,13 +20,13 @@ class CartState extends State<Cart> {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height,
       decoration: BoxDecoration(
         color: Theme.of(context).backgroundColor,
       ),
       child: Stack(
         children: [
-          cartTitle(context),
-          refreshButton(context),
+          clearButton(context),
           cartdisplay(context),
           (cartAllInfo.length == 0) ? emptyCart() : checkoutButton(context),
         ],
@@ -62,12 +63,14 @@ class CartState extends State<Cart> {
 
   Widget checkoutButton(BuildContext context) {
     return Positioned(
-      bottom: 8,
+      // bottom: 8,
       width: MediaQuery.of(context).size.width * 0.4,
       height: MediaQuery.of(context).size.height * 0.07,
-      left: MediaQuery.of(context).size.width * 0.5 -
-          MediaQuery.of(context).size.width * (0.4 / 2),
+      // left: MediaQuery.of(context).size.width * 0.5 -
+      //     MediaQuery.of(context).size.width * (0.4 / 2),
       // bringing to centre horizontal
+      top: 10,
+      left: 10,
       child: FittedBox(
         fit: BoxFit.fitWidth,
         child: ElevatedButton.icon(
@@ -111,27 +114,31 @@ class CartState extends State<Cart> {
     );
   }
 
-  Widget refreshButton(BuildContext context) {
+  Widget clearButton(BuildContext context) {
     return Positioned(
-      //refresh button
-      top: 15,
-      width: MediaQuery.of(context).size.width * 0.35,
+      //clear button
+      top: 10,
+      width: MediaQuery.of(context).size.width * 0.4,
       right: 10,
-      height: MediaQuery.of(context).size.height * 0.05,
+      height: MediaQuery.of(context).size.height * 0.07,
       child: FittedBox(
         fit: BoxFit.fitWidth,
         child: ElevatedButton.icon(
             onPressed: () {
               setState(() {
-                cartAllInfo = cartAllInfo;
-                // just a refresh
+                cartAllInfo = cartAllInfo.map((food) {
+                  food.quantity = 0;
+                  return food;
+                }).toList();
+                cartAllInfo = [];
+                // first set quantity of all food to zero and then empty the cart
               });
             },
             icon: Icon(Icons.refresh),
             label: FittedBox(
               fit: BoxFit.fitWidth,
               child: Text(
-                "Refresh",
+                "Clear Cart",
               ),
             )),
       ),
@@ -165,13 +172,22 @@ class CartState extends State<Cart> {
   Widget cartdisplay(BuildContext context) {
     return Positioned(
       // Contents of Cart
-      left: 10,
+
       top: MediaQuery.of(context).size.height * 0.09,
-      height: MediaQuery.of(context).size.height * 0.6,
-      width: MediaQuery.of(context).size.width * 0.93,
+      height: MediaQuery.of(context).size.height * 0.66,
+      width: MediaQuery.of(context).size.width,
       child: Container(
         margin: EdgeInsets.only(top: 5),
-        child: foodList(cartAllInfo),
+        child: Card(
+          elevation: 10,
+          color: Theme.of(context).backgroundColor,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          child: Padding(
+            padding: const EdgeInsets.all(3.2),
+            child: foodList(cartAllInfo, state: this),
+          ),
+        ),
       ),
     );
   }
