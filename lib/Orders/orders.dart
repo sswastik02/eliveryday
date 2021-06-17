@@ -18,8 +18,27 @@ class DisplayOrderState extends State<DisplayOrder> {
       ),
       child: Stack(
         children: [
-          orderTitle(),
           refreshButton(),
+          Positioned(
+            // Contents of Cart
+
+            top: MediaQuery.of(context).size.height * 0.09,
+            height: MediaQuery.of(context).size.height * 0.66,
+            width: MediaQuery.of(context).size.width,
+            child: Container(
+              margin: EdgeInsets.only(top: 5),
+              child: Card(
+                elevation: 10,
+                color: Theme.of(context).backgroundColor,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)),
+                child: Padding(
+                  padding: const EdgeInsets.all(3.2),
+                  child: Text(""),
+                ),
+              ),
+            ),
+          ),
           (trackOrder.length == 0) ? emptyOrder() : orderListDisplay(),
         ],
       ),
@@ -51,18 +70,16 @@ class DisplayOrderState extends State<DisplayOrder> {
 
   Widget refreshButton() {
     return Positioned(
-      top: 15,
+      //clear button
+      top: 10,
       width: MediaQuery.of(context).size.width * 0.35,
-      right: 10,
-      height: MediaQuery.of(context).size.height * 0.05,
+      right: MediaQuery.of(context).size.width * (0.5 - 0.35 / 2),
+      height: MediaQuery.of(context).size.height * 0.07,
       child: FittedBox(
         fit: BoxFit.fitWidth,
         child: ElevatedButton.icon(
             onPressed: () {
-              setState(() {
-                cartAllInfo = cartAllInfo;
-                // just a refresh
-              });
+              setState(() {});
             },
             icon: Icon(Icons.refresh),
             label: FittedBox(
@@ -80,13 +97,17 @@ class DisplayOrderState extends State<DisplayOrder> {
         "${cartInfo.foodList.map((food) => "${food.foodItemName} ")} "));
     return Positioned(
       // List of resturant card
-      top: 70,
-      height: MediaQuery.of(context).size.height * 0.65,
+      top: MediaQuery.of(context).size.height * 0.12,
+      height: MediaQuery.of(context).size.height * 0.62,
       width: MediaQuery.of(context).size.width,
-      child: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Column(
-          children: trackOrder.map((cartInfo) => orderCard(cartInfo)).toList(),
+      child: Padding(
+        padding: const EdgeInsets.all(3.2),
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            children:
+                trackOrder.map((cartInfo) => orderCard(cartInfo)).toList(),
+          ),
         ),
       ),
     );
@@ -100,7 +121,8 @@ class DisplayOrderState extends State<DisplayOrder> {
           if (snapshot.hasData) {
             return Container(
               width: MediaQuery.of(context).size.width * 0.9,
-              height: MediaQuery.of(context).size.height * 0.2,
+              height: MediaQuery.of(context).size.width * 0.9 / 1.6957,
+              // 1.6957 is the aspect ratio of the picture
               child: snapshot.data == true
                   ? GestureDetector(
                       onTap: () async {
@@ -110,28 +132,44 @@ class DisplayOrderState extends State<DisplayOrder> {
                         }));
                       },
                       child: Card(
-                        color: Theme.of(context).primaryColor,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        elevation: 10,
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        semanticContainer: true,
+                        child: Stack(
                           children: [
-                            Text(
-                              " Time Left : ${(showOrderOnMap.routeInfo.duration() ~/ 60)} min ",
-                              style: TextStyle(color: Colors.white),
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.9,
+                              height: MediaQuery.of(context).size.width *
+                                  0.9 /
+                                  1.6957,
+                              child: Image.asset(
+                                'lib/Resturant/resturantImages/OrderMapsImageCard.png',
+                                fit: BoxFit.fill,
+                              ),
                             ),
-                            Text(
-                                " Distance: ${(showOrderOnMap.routeInfo.distance() / 1000).toStringAsPrecision(2)} Km ",
-                                style: TextStyle(color: Colors.white)),
-                            Text(
-                              " Delivering to: ${cartInfo.address} ",
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(color: Colors.white),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Text(
+                                  " Time Left : ${(showOrderOnMap.routeInfo.duration() ~/ 60)} min ",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                Text(
+                                    " Distance: ${(showOrderOnMap.routeInfo.distance() / 1000).toStringAsPrecision(2)} Km ",
+                                    style: TextStyle(color: Colors.white)),
+                                Text(
+                                  " Delivering to: ${cartInfo.address} ",
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                Text(
+                                  " Contains: ${cartInfo.foodList.map((food) => food.foodItemName).toList().reduce((x, y) => x + ", " + y)} ",
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(color: Colors.white),
+                                )
+                              ],
                             ),
-                            Text(
-                              " Contains: ${cartInfo.foodList.map((food) => food.foodItemName).toString()} ",
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(color: Colors.white),
-                            )
                           ],
                         ),
                       ),
@@ -143,10 +181,30 @@ class DisplayOrderState extends State<DisplayOrder> {
             );
           } else {
             return Container(
-              margin: EdgeInsets.only(top: 20, bottom: 20),
-              child: Center(
-                child: CircularProgressIndicator(),
-              ),
+              width: MediaQuery.of(context).size.width * 0.9,
+              height: MediaQuery.of(context).size.width * 0.9 / 1.6957,
+              child: Card(
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  semanticContainer: true,
+                  child: Stack(children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      height: MediaQuery.of(context).size.width * 0.9 / 1.6957,
+                      child: Image.asset(
+                        'lib/Resturant/resturantImages/OrderMapsImageCard.png',
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                    Positioned(
+                        left: MediaQuery.of(context).size.width * 0.9 / 2 - 50,
+                        top: MediaQuery.of(context).size.width * 0.45 / 1.6957 -
+                            50,
+                        width: 100,
+                        height: 100,
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                        )),
+                  ])),
             );
           }
         });
