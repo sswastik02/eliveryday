@@ -26,7 +26,7 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
               onTap: () => bckbtn ? Navigator.pop(context) : null,
               child: Card(
                 elevation: 10,
-                color: Theme.of(context).primaryColor,
+                color: Colors.teal.shade500,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
                     topRight: Radius.circular(30),
@@ -45,7 +45,7 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             ),
             Card(
-              color: Theme.of(context).primaryColor,
+              color: Colors.teal.shade500,
               elevation: 10,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(

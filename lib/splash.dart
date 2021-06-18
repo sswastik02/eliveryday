@@ -8,14 +8,26 @@ class SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-      width: MediaQuery.of(context).size.width * 0.8,
-      child: Center(
-        child: FittedBox(
-          child: Icon(
-            Icons.local_dining_sharp,
-            size: 400,
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height,
+      child: Stack(
+        children: [
+          Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            child: Image.asset(
+              "lib/Resturant/resturantImages/splashBackGround.png",
+              fit: BoxFit.fill,
+            ),
           ),
-        ),
+          Positioned(
+            bottom: 25,
+            width: 50,
+            height: 50,
+            left: MediaQuery.of(context).size.width / 2 - 25,
+            child: CircularProgressIndicator(),
+          )
+        ],
       ),
     ));
   }

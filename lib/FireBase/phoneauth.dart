@@ -116,7 +116,7 @@ class _PhoneAuthState extends State<PhoneAuth> {
       }
       // if result is true profile was inputted and will be stored as currentUser
     } else {
-      currentUser = await fireStoreService.getUserProfile(user);
+      currentUser = await fireStoreService.getUserProfile(user.uid);
     }
     return authResult;
   }

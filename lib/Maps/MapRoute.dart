@@ -58,7 +58,7 @@ class RouteInfo {
       Polyline polyline = Polyline(
           polylineId: PolylineId("Draw"),
           points: polyLine1,
-          color: Colors.lightGreen,
+          color: Colors.teal.shade700,
           width: 7);
       return polyline;
     }
@@ -140,7 +140,7 @@ class ShowOrderOnMapState extends State<ShowOrderOnMap> {
                   Icons.arrow_back_ios,
                   color: Colors.white,
                 ),
-                color: Theme.of(context).primaryColor,
+                color: Colors.teal.shade500,
               ),
             ),
             Positioned(
@@ -153,7 +153,7 @@ class ShowOrderOnMapState extends State<ShowOrderOnMap> {
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.7,
                   height: MediaQuery.of(context).size.height * 0.5,
-                  color: Theme.of(context).primaryColor.withOpacity(0.7),
+                  color: Colors.teal.shade500.withOpacity(0.8),
                   child: orderInfo(),
                 ),
               ),

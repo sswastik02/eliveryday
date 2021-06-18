@@ -1,5 +1,6 @@
 import 'package:eliveryday/Cart/cartInfo.dart';
 import 'package:eliveryday/Cart/cartModel.dart';
+import 'package:eliveryday/FireBase/customUser.dart';
 import 'package:eliveryday/FireBase/firebaseCustomServices.dart';
 import 'package:eliveryday/FireBase/styledbuttons.dart';
 import 'package:eliveryday/Home/base.dart';
@@ -150,8 +151,9 @@ class CheckOutPageState extends State<CheckoutPage> {
               child: loading
                   ? Center(
                       child: SizedBox(
-                          height: 30, child: CircularProgressIndicator()),
-                      widthFactor: 1,
+                          width: 30,
+                          height: 30,
+                          child: CircularProgressIndicator()),
                     )
                   : styledButton(context, "Order Now", () async {
                       setState(() {
@@ -172,6 +174,7 @@ class CheckOutPageState extends State<CheckoutPage> {
                         await widget.fireStoreService.createCart(
                           cartinfo,
                         );
+
                         setState(() {
                           loading = false;
                         });

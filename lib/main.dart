@@ -1,3 +1,9 @@
+import 'dart:async';
+import 'package:eliveryday/Cart/cartInfo.dart';
+import 'package:eliveryday/Cart/cartModel.dart';
+
+import './FireBase/firebaseCustomServices.dart';
+import 'package:eliveryday/FireBase/customUser.dart';
 import 'package:eliveryday/Internet.dart';
 import 'package:eliveryday/splash.dart';
 import 'package:eliveryday/welcome.dart';
@@ -27,34 +33,55 @@ class MyApp extends StatefulWidget {
 
   // This widget is the root of your application.
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  FireStoreService fireStoreService = FireStoreService();
   MyAppState createState() => MyAppState();
 }
 
 class MyAppState extends State<MyApp> {
   bool loading = true;
-  Future initialCheck() async {
-    setState(() async {
-      widget.user = await widget._auth.currentUser();
-      loading = false;
-    });
+
+  Future<bool> initialCheck() async {
+    widget.user = await widget._auth.currentUser();
+    if (widget.user == null) return false;
+
+    currentUser =
+        await widget.fireStoreService.getUserProfile(widget.user!.uid);
+
+    return true;
   }
 
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
     return FutureBuilder(
         future: checkInternetConnection(),
         builder: (context, snapshot) {
           if (snapshot.hasData && snapshot.data == 0) {
             return FutureBuilder(
-                future: widget._auth.currentUser(),
+                future: initialCheck().timeout(
+                  Duration(seconds: 30),
+                  onTimeout: () {
+                    return false;
+                  },
+                ),
                 builder: (context, snapshot) {
-                  return (snapshot.hasData)
-                      ? HomeRoute(widget._auth)
-                      : WelcomeScreen(widget._auth, this);
+                  print("object1");
+                  print(snapshot.hasData);
+
+                  if (snapshot.hasData) {
+                    print(snapshot.data);
+                    return (snapshot.data == true)
+                        ? HomeRoute(widget._auth)
+                        : WelcomeScreen(widget._auth, this);
+                  } else {
+                    return SplashScreen();
+                  }
                 });
-          }
-          return noInternetConnection(context, this);
+          } else if (snapshot.hasData && snapshot.data == 1) {
+            return noInternetConnection(context, this);
+          } else
+            return SplashScreen();
         });
   }
 }

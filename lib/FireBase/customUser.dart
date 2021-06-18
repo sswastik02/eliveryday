@@ -4,6 +4,7 @@ class User {
   final String fullName;
   final String age;
   final String phoneNumber;
+  List<String> cartIds = [];
 
   User({
     this.id = '',
@@ -18,7 +19,8 @@ class User {
       : id = data['id'],
         fullName = data['fullName'],
         age = data['age'],
-        phoneNumber = data['phoneNumber'];
+        phoneNumber = data['phoneNumber'],
+        cartIds = List.from(data['cartIds']);
 
   Map<String, dynamic> toJSON() {
     return {
@@ -26,6 +28,7 @@ class User {
       'fullName': fullName,
       'age': age,
       'phoneNumber': phoneNumber,
+      'cartIds': cartIds,
     };
   }
 }

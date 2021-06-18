@@ -182,7 +182,7 @@ class _MyMapsPageState extends State<MyMapsPage> {
 
   Widget searchButton() {
     return TextButton.icon(
-      style: ElevatedButton.styleFrom(primary: Theme.of(context).primaryColor),
+      style: ElevatedButton.styleFrom(primary: Colors.teal.shade500),
       icon: Icon(
         Icons.search,
         color: Colors.white,
@@ -279,7 +279,7 @@ class _MyMapsPageState extends State<MyMapsPage> {
       right: 15,
       child: Container(
         padding: EdgeInsets.all(15.0),
-        color: Colors.green.shade700.withAlpha(190),
+        color: Colors.teal.shade500.withAlpha(190),
         child: Container(
           child: Text(
             widget._address,
@@ -302,7 +302,7 @@ class _MyMapsPageState extends State<MyMapsPage> {
       child: ElevatedButton(
         child: Text('Choose Location'),
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(Colors.green.shade800),
+          backgroundColor: MaterialStateProperty.all(Colors.teal.shade500),
         ),
         onPressed: () {
           Navigator.pop(context);

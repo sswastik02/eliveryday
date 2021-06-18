@@ -24,6 +24,22 @@ class ProfileState extends State<Profile> {
             color: Theme.of(context).backgroundColor,
             child: Stack(
               children: [
+                Positioned(
+                  // Contents of Cart
+
+                  top: MediaQuery.of(context).size.height * 0.09,
+                  height: MediaQuery.of(context).size.height * 0.66,
+                  width: MediaQuery.of(context).size.width,
+                  child: Container(
+                    margin: EdgeInsets.only(top: 5),
+                    child: Card(
+                        elevation: 10,
+                        color: Theme.of(context).backgroundColor,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                        child: Text("")),
+                  ),
+                ),
                 profileTitle(),
                 refreshButton(),
                 (snapshot.hasData) ? profileDisplay() : emptyProfile(),
@@ -42,15 +58,14 @@ class ProfileState extends State<Profile> {
       child: Container(
         margin: EdgeInsets.only(bottom: 10),
         decoration: BoxDecoration(
-            border: Border.all(color: Theme.of(context).primaryColor),
-            borderRadius: BorderRadius.all(Radius.circular(5))),
+            border: Border.all(color: Colors.teal.shade500),
+            borderRadius: BorderRadius.all(Radius.circular(15))),
         width: MediaQuery.of(context).size.width * 0.3,
         child: FittedBox(
           fit: BoxFit.fitWidth,
           child: Text(
             " Profile ",
-            style:
-                TextStyle(color: Theme.of(context).primaryColor, fontSize: 30),
+            style: TextStyle(color: Colors.teal.shade500, fontSize: 30),
           ),
         ),
       ),
@@ -124,7 +139,7 @@ class ProfileState extends State<Profile> {
 
   Future assignCurrentUser() async {
     FirebaseUser user = await widget.auth.currentUser();
-    currentUser = await FireStoreService().getUserProfile(user);
+    currentUser = await FireStoreService().getUserProfile(user.uid);
     setState(() {
       loading = false;
     });
@@ -151,7 +166,7 @@ class ProfileState extends State<Profile> {
               ),
             )
           : Container(
-              height: MediaQuery.of(context).size.height * 0.8,
+              height: MediaQuery.of(context).size.height * 0.6,
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -173,6 +188,16 @@ class ProfileState extends State<Profile> {
                     Text(
                       "Phone Number: ${currentUser.phoneNumber} ",
                       style: style,
+                    ),
+                    SizedBox(
+                      height: 50,
+                    ),
+                    Text(
+                      "Unique ID: ${currentUser.id} ",
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.redAccent,
+                          fontWeight: FontWeight.bold),
                     ),
                     SizedBox(
                       height: 50,
