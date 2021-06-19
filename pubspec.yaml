@@ -42,6 +42,7 @@ dependencies:
   curved_navigation_bar: ^0.3.7
   flutter_phoenix: ^1.0.0
   font_awesome_flutter:
+  flutter_config:
  # flutter_google_places: ^0.3.0
 
 dev_dependencies:

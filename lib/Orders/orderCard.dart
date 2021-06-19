@@ -38,218 +38,8 @@ class OrderCardState extends State<OrderCard> {
     print(trackOrder.map((e) => e.id));
     // Cannot process more than one order (As they are future builders whichever computes faster will be put in the array cartIds)
     print(currentUser.cartIds);
-    ShowOrderOnMap showOrderOnMap = ShowOrderOnMap(cartInfo: widget.cartInfo);
-    String dateTimeString = widget.cartInfo.id.replaceFirst(currentUser.id, "");
-    DateTime dateTime = DateTime.parse(dateTimeString); // Order Time
-    double duration = -1;
-    int timePassed = -1;
 
-    print(dateTime);
-
-    return widget.currentOrder
-        ? FutureBuilder(
-            future: showOrderOnMap.routeInfo.getData(),
-            builder: (context, snapshot) {
-              duration = showOrderOnMap.routeInfo.duration();
-              timePassed = DateTime.now().difference(dateTime).inSeconds;
-              // print(timePassed);
-              // print(duration);
-              print(duration - timePassed);
-              print(currentUser.cartIds);
-              if (snapshot.hasData) {
-                if (timePassed > duration && duration >= 0) {
-                  print("Exe");
-                  try {
-                    setState(() {
-                      updateUserPastCart(widget.cartInfo)
-                          .then((value) => setState(() {
-                                trackOrder.remove(widget.cartInfo);
-                                widget.state?.setState(() {});
-                              }));
-                    });
-                  } catch (e) {}
-                }
-
-                return Container(
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  height: MediaQuery.of(context).size.width * 0.9 / 1.6957,
-                  // 1.6957 is the aspect ratio of the picture
-                  child: snapshot.data == true
-                      ? GestureDetector(
-                          onTap: () async {
-                            await Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return showOrderOnMap;
-                            }));
-                          },
-                          child: Card(
-                            elevation: 10,
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
-                            semanticContainer: true,
-                            child: Stack(
-                              children: [
-                                Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.9,
-                                  height: MediaQuery.of(context).size.width *
-                                      0.9 /
-                                      1.6957,
-                                  child: Image.asset(
-                                    'lib/Resturant/resturantImages/OrderMapsImageCard.png',
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Icon(Icons.access_time,
-                                            color: Colors.white),
-                                        Text(
-                                          "  : ${((duration - timePassed) ~/ 60).abs()} min ",
-                                          style: TextStyle(color: Colors.white),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Icon(
-                                          Icons.add_road,
-                                          color: Colors.white,
-                                        ),
-                                        Text(
-                                            " : ${(showOrderOnMap.routeInfo.distance() / 1000).abs().toStringAsPrecision(2)} Km ",
-                                            style:
-                                                TextStyle(color: Colors.white)),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Icon(
-                                          Icons.maps_home_work,
-                                          color: Colors.white,
-                                        ),
-                                        SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.7,
-                                          child: Text(
-                                            " : ${widget.cartInfo.address} ",
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 18),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Icon(
-                                          Icons.list_alt,
-                                          color: Colors.white,
-                                        ),
-                                        SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.7,
-                                          child: Text(
-                                            " : ${widget.cartInfo.foodList.map((food) => food.foodItemName).toList().reduce((x, y) => x + ", " + y)} ",
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 18),
-                                          ),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        )
-                      : Card(
-                          color: Theme.of(context).primaryColor,
-                          child: Center(child: Text("Error retrieving data!")),
-                        ),
-                );
-              } else {
-                return loadingCard(context);
-              }
-            })
-        : Container(
-            width: MediaQuery.of(context).size.width * 0.9,
-            height: MediaQuery.of(context).size.width * 0.9 / 1.6957,
-            // 1.6957 is the aspect ratio of the picture
-            child: Card(
-              elevation: 10,
-              color: Colors.teal.shade500,
-              clipBehavior: Clip.antiAliasWithSaveLayer,
-              semanticContainer: true,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Icon(
-                        Icons.maps_home_work,
-                        color: Colors.white,
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.7,
-                        child: Text(
-                          " : ${widget.cartInfo.address} ",
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(color: Colors.white, fontSize: 18),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Icon(
-                        Icons.list_alt,
-                        color: Colors.white,
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.7,
-                        child: Text(
-                          " : ${widget.cartInfo.foodList.map((food) => food.foodItemName).toList().reduce((x, y) => x + ", " + y)} ",
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(color: Colors.white, fontSize: 18),
-                        ),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ),
-          );
+    return widget.currentOrder ? currentOrderCard() : pastOrderCard();
   }
 
   Future<void> updateUserPastCart(CartInfo cartInfo) async {
@@ -268,6 +58,216 @@ class OrderCardState extends State<OrderCard> {
     });
     currentUser.cartIds = x;
     print(currentUser.cartIds);
+  }
+
+  Widget currentOrderCard() {
+    ShowOrderOnMap showOrderOnMap = ShowOrderOnMap(cartInfo: widget.cartInfo);
+    String dateTimeString = widget.cartInfo.id.replaceFirst(currentUser.id, "");
+    DateTime dateTime = DateTime.parse(dateTimeString); // Order Time
+    double duration = -1;
+    int timePassed = -1;
+    return FutureBuilder(
+        future: showOrderOnMap.routeInfo.getData(),
+        builder: (context, snapshot) {
+          duration = showOrderOnMap.routeInfo.duration();
+          timePassed = DateTime.now().difference(dateTime).inSeconds;
+          // print(timePassed);
+          // print(duration);
+          print(duration - timePassed);
+          print(currentUser.cartIds);
+          if (snapshot.hasData) {
+            if (timePassed > duration && duration >= 0) {
+              print("Exe");
+              try {
+                setState(() {
+                  updateUserPastCart(widget.cartInfo)
+                      .then((value) => setState(() {
+                            trackOrder.remove(widget.cartInfo);
+                            widget.state?.setState(() {});
+                          }));
+                });
+              } catch (e) {}
+            }
+
+            return Container(
+              width: MediaQuery.of(context).size.width * 0.9,
+              height: MediaQuery.of(context).size.width * 0.9 / 1.6957,
+              // 1.6957 is the aspect ratio of the picture
+              child: snapshot.data == true
+                  ? GestureDetector(
+                      onTap: () async {
+                        await Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return showOrderOnMap;
+                        }));
+                      },
+                      child: Card(
+                        elevation: 10,
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        semanticContainer: true,
+                        child: Stack(
+                          children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.9,
+                              height: MediaQuery.of(context).size.width *
+                                  0.9 /
+                                  1.6957,
+                              child: Image.asset(
+                                'lib/Resturant/resturantImages/OrderMapsImageCard.png',
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Icon(Icons.access_time,
+                                        color: Colors.white),
+                                    Text(
+                                      ((duration - timePassed) ~/ 60 > 1)
+                                          ? "  : ${((duration - timePassed) ~/ 60).abs()} min "
+                                          : "  : < 1 min  ",
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 18),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Icon(
+                                      Icons.add_road,
+                                      color: Colors.white,
+                                    ),
+                                    Text(
+                                        " : ${(showOrderOnMap.routeInfo.distance() / 1000).abs().toStringAsPrecision(2)} Km ",
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 18)),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Icon(
+                                      Icons.maps_home_work,
+                                      color: Colors.white,
+                                    ),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.7,
+                                      child: Text(
+                                        " : ${widget.cartInfo.address} ",
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 18),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Icon(
+                                      Icons.list_alt,
+                                      color: Colors.white,
+                                    ),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.7,
+                                      child: Text(
+                                        " : ${widget.cartInfo.foodList.map((food) => food.foodItemName).toList().reduce((x, y) => x + ", " + y)} ",
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 18),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  : Card(
+                      color: Theme.of(context).primaryColor,
+                      child: Center(child: Text("Error retrieving data!")),
+                    ),
+            );
+          } else {
+            return loadingCard(context);
+          }
+        });
+  }
+
+  Widget pastOrderCard() {
+    bool clicked = false;
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.9,
+      height: MediaQuery.of(context).size.width * 0.9 / 1.6957,
+      // 1.6957 is the aspect ratio of the picture
+      child: Card(
+        elevation: 10,
+        color: Colors.teal.shade500,
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        semanticContainer: true,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Row(
+              children: [
+                SizedBox(
+                  width: 10,
+                ),
+                Icon(
+                  Icons.maps_home_work,
+                  color: Colors.white,
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.7,
+                  child: Text(
+                    " : ${widget.cartInfo.address} ",
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(color: Colors.white, fontSize: 18),
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                SizedBox(
+                  width: 10,
+                ),
+                Icon(
+                  Icons.list_alt,
+                  color: Colors.white,
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.7,
+                  child: Text(
+                    " : ${widget.cartInfo.foodList.map((food) => food.foodItemName).toList().reduce((x, y) => x + ", " + y)} ",
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(color: Colors.white, fontSize: 18),
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
 

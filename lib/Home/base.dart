@@ -166,7 +166,11 @@ class HomeRouteState extends State<HomeRoute> {
         alignment: Alignment.center,
         padding: EdgeInsets.only(left: 5, right: 5),
         child: Text(
-          (cartAddress == '') ? address : cartAddress,
+          (cartAddress == '')
+              ? address
+              : (cartAddress.length < 18)
+                  ? cartAddress
+                  : cartAddress.substring(0, 18) + " ...",
           // modified to work with cartAddress global variable
           overflow: TextOverflow.ellipsis,
           maxLines: 1,

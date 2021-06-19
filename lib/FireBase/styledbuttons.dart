@@ -1,3 +1,4 @@
+import 'package:eliveryday/Cart/cartInfo.dart';
 import 'package:eliveryday/profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -51,6 +52,14 @@ Widget signoutButton(BuildContext context, FirebaseAuth _auth,
         content: Text(uid + ' has successfully signed out.'),
       ));
       state?.setState(() {});
+      cartAllInfo = cartAllInfo.map((food) {
+        food.quantity = 0;
+        return food;
+      }).toList();
+      cartAllInfo = [];
+      cartAddress = "";
+      trackOrder = [];
+
       Phoenix.rebirth(context);
     }, icon: Icons.vpn_key_outlined, iconColor: Colors.red);
   });

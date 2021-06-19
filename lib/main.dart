@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:eliveryday/Cart/cartInfo.dart';
 import 'package:eliveryday/Cart/cartModel.dart';
+import 'package:flutter_config/flutter_config.dart';
 
 import './FireBase/firebaseCustomServices.dart';
 import 'package:eliveryday/FireBase/customUser.dart';
@@ -16,6 +17,7 @@ import 'Home/base.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await FlutterConfig.loadEnvVariables();
   runApp(Phoenix(
     child: MaterialApp(
       theme: ThemeData(

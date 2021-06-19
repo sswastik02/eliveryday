@@ -76,9 +76,7 @@ class DisplayOrderState extends State<DisplayOrder> {
         fit: BoxFit.fitWidth,
         child: ElevatedButton.icon(
             onPressed: () {
-              setState(() {
-                currentOrderPrimary = !currentOrderPrimary;
-              });
+              setState(() {});
             },
             icon: Icon(Icons.refresh),
             label: FittedBox(
@@ -92,7 +90,6 @@ class DisplayOrderState extends State<DisplayOrder> {
   }
 
   Widget ordersButton() {
-    String text = (currentOrderPrimary) ? "Past Orders" : "Current Orders";
     return Positioned(
       //clear button
       top: 10,
@@ -156,44 +153,48 @@ class DisplayOrderState extends State<DisplayOrder> {
                     future: getPastCartList(snapshot.data!.cartIds),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
-                        return Positioned(
-                          // List of resturant card
-                          top: MediaQuery.of(context).size.height * 0.12,
-                          height: MediaQuery.of(context).size.height * 0.62,
-                          width: MediaQuery.of(context).size.width,
-                          child: Padding(
-                            padding: const EdgeInsets.all(3.2),
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.vertical,
-                              child: Column(
-                                children: snapshot.data!.reversed
-                                    .map((cartInfo) => OrderCard(
-                                          cartInfo: cartInfo,
-                                          state: this,
-                                          currentOrder: currentOrderPrimary,
-                                        ))
-                                    .toList(),
-                              ),
-                            ),
-                          ),
-                        );
+                        return (snapshot.data!.isNotEmpty)
+                            ? Positioned(
+                                // List of resturant card
+                                top: MediaQuery.of(context).size.height * 0.12,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.62,
+                                width: MediaQuery.of(context).size.width,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(3.2),
+                                  child: SingleChildScrollView(
+                                    scrollDirection: Axis.vertical,
+                                    child: Column(
+                                      children: snapshot.data!.reversed
+                                          .map((cartInfo) => OrderCard(
+                                                cartInfo: cartInfo,
+                                                state: this,
+                                                currentOrder:
+                                                    currentOrderPrimary,
+                                              ))
+                                          .toList(),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            : emptyOrder(context, currentOrder: false);
                       } else {
                         return Positioned(
-                          child: loadingCard(context),
-                          left: MediaQuery.of(context).size.width * 0.05,
-                          top: MediaQuery.of(context).size.height * 0.12,
-                          height: MediaQuery.of(context).size.height * 0.62,
-                          width: MediaQuery.of(context).size.width,
+                          child: CircularProgressIndicator(),
+                          left: MediaQuery.of(context).size.width / 2 - 50,
+                          top: MediaQuery.of(context).size.height * 0.15,
+                          height: 50,
+                          width: 50,
                         );
                       }
                     });
               } else {
                 return Positioned(
-                  child: loadingCard(context),
-                  left: MediaQuery.of(context).size.width * 0.05,
-                  top: MediaQuery.of(context).size.height * 0.12,
-                  height: MediaQuery.of(context).size.height * 0.62,
-                  width: MediaQuery.of(context).size.width,
+                  child: CircularProgressIndicator(),
+                  left: MediaQuery.of(context).size.width / 2 - 50,
+                  top: MediaQuery.of(context).size.height * 0.15,
+                  height: 50,
+                  width: 50,
                 );
               }
             });

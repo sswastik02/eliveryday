@@ -192,12 +192,17 @@ class ProfileState extends State<Profile> {
                     SizedBox(
                       height: 50,
                     ),
-                    Text(
-                      "Unique ID: ${currentUser.id} ",
-                      style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.redAccent,
-                          fontWeight: FontWeight.bold),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.95,
+                      child: FittedBox(
+                        child: Text(
+                          "Unique ID: ${currentUser.id} ",
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.redAccent,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
                     ),
                     SizedBox(
                       height: 50,

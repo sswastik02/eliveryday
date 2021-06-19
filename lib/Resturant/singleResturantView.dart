@@ -228,7 +228,7 @@ class ResturantViewState extends State<ResturantView> {
                     Icons.arrow_back_ios,
                     color: Colors.white,
                   ),
-                  color: Theme.of(context).primaryColor,
+                  color: Colors.teal.shade500,
                 ),
               ),
             ],
