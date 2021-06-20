@@ -31,6 +31,8 @@ class CartInfo {
                 resturantCord: LatLng(0, 1),
                 quantity: int.parse(foodInfo.substring(
                     foodInfo.indexOf("?") + 1, foodInfo.indexOf("|"))),
+                pricePerMeasure: double.parse(foodInfo.substring(
+                    foodInfo.indexOf("|") + 1, foodInfo.indexOf("@"))),
               ),
             )
             .toList();
@@ -40,7 +42,12 @@ class CartInfo {
       'id': id,
       'foodList': foodList
           .map((food) =>
-              food.foodItemName + "?" + food.quantity.toString() + "|")
+              food.foodItemName +
+              "?" +
+              food.quantity.toString() +
+              "|" +
+              food.pricePerMeasure.toString() +
+              "@")
           .toList(),
       'address': address,
       'delivCord': [delivCord.latitude, delivCord.longitude],

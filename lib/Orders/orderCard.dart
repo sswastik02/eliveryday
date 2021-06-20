@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dotted_line/dotted_line.dart';
 import 'package:eliveryday/Cart/cartInfo.dart';
 import 'package:eliveryday/Cart/cartModel.dart';
 import 'package:eliveryday/FireBase/customUser.dart';
@@ -18,6 +19,7 @@ class OrderCard extends StatefulWidget {
 class OrderCardState extends State<OrderCard> {
   double previousDuration = -1;
   double previousDistance = -1;
+  bool _first = true;
   Timer? timer;
 
   void initState() {
@@ -223,12 +225,13 @@ class OrderCardState extends State<OrderCard> {
         });
   }
 
-  Widget pastOrderCard() {
-    bool clicked = false;
-    return Container(
-      width: MediaQuery.of(context).size.width * 0.9,
-      height: MediaQuery.of(context).size.width * 0.9 / 1.6957,
-      // 1.6957 is the aspect ratio of the picture
+  Widget mainPastOrderCard() {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _first = !_first;
+        });
+      },
       child: Card(
         elevation: 10,
         color: Colors.teal.shade500,
@@ -279,6 +282,97 @@ class OrderCardState extends State<OrderCard> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget pastOrderListCard() {
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.9,
+      height: MediaQuery.of(context).size.width * 0.9 / 1.6957,
+      child: Card(
+        color: Colors.grey.shade300,
+        child: SingleChildScrollView(
+          child: Column(
+              children: widget.cartInfo.foodList
+                  .map(
+                    (food) => Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          " ${food.foodItemName} ",
+                          style: TextStyle(
+                              fontSize: 20, color: Colors.blueGrey.shade500),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text("\u{20B9} ${food.pricePerMeasure} ",
+                                style: TextStyle(
+                                    color: Colors.blueGrey.shade500,
+                                    fontSize: 17)),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                                widget.cartInfo.foodList[0].quantity.toString(),
+                                style: TextStyle(
+                                    color: Colors.blueGrey.shade500,
+                                    fontSize: 17)),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                                "\u{20B9} ${food.pricePerMeasure * food.quantity}",
+                                style: TextStyle(
+                                    color: Colors.blueGrey.shade500,
+                                    fontSize: 17)),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                      ],
+                    ),
+                  )
+                  .toList()),
+        ),
+      ),
+    );
+  }
+
+  Widget pastOrderCard() {
+    return AnimatedCrossFade(
+      firstChild: Container(
+          width: MediaQuery.of(context).size.width * 0.9,
+          height: MediaQuery.of(context).size.width * 0.9 / 1.6957,
+          // 1.6957 is the aspect ratio of the picture
+          child: mainPastOrderCard()),
+      secondChild: Container(
+          width: MediaQuery.of(context).size.width * 0.9,
+          height: MediaQuery.of(context).size.width * (0.9 / 1.6957) * 1.6,
+          // 1.6957 is the aspect ratio of the picture
+          child: Column(
+            children: [
+              Container(
+                width: MediaQuery.of(context).size.width * 0.9,
+                height: MediaQuery.of(context).size.width * 0.9 / 1.6957 * 0.5,
+                child: mainPastOrderCard(),
+              ),
+              pastOrderListCard(),
+            ],
+          )),
+      duration: Duration(milliseconds: 500),
+      crossFadeState:
+          _first ? CrossFadeState.showFirst : CrossFadeState.showSecond,
     );
   }
 }

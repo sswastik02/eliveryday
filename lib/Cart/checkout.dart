@@ -214,97 +214,110 @@ class CheckOutPageState extends State<CheckOutPage> {
     return Container(
       margin: EdgeInsets.only(top: 5, bottom: 5),
       width: MediaQuery.of(context).size.width * 0.95,
-      height: MediaQuery.of(context).size.height * 0.3,
-      child: Card(
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(20)),
-            side: BorderSide(
-              color: Colors.blueGrey.shade200,
-              width: 2,
-            )),
-        child: Stack(children: [
-          Positioned(
-            top: MediaQuery.of(context).size.height * 0.3 * 0.15,
-            left: MediaQuery.of(context).size.width * 0.95 * 0.05,
-            width: MediaQuery.of(context).size.width * 0.95 * 0.85,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Text(
-                name,
-                style: TextStyle(color: Colors.blueGrey.shade500, fontSize: 20),
+      height: 200,
+      child: FittedBox(
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.95,
+          height: 200,
+          child: Card(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(20)),
+                side: BorderSide(
+                  color: Colors.blueGrey.shade200,
+                  width: 2,
+                )),
+            child: Stack(children: [
+              Positioned(
+                top: MediaQuery.of(context).size.height * 0.3 * 0.15,
+                left: MediaQuery.of(context).size.width * 0.95 * 0.05,
+                width: MediaQuery.of(context).size.width * 0.95 * 0.85,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Text(
+                    name,
+                    style: TextStyle(
+                        color: Colors.blueGrey.shade500, fontSize: 20),
+                  ),
+                ),
               ),
-            ),
+              Positioned(
+                left: MediaQuery.of(context).size.width * 0.95 * 0.04,
+                bottom: MediaQuery.of(context).size.height * 0.3 * 0.15,
+                width: MediaQuery.of(context).size.width * 0.95 * 0.92,
+                child: Container(
+                  margin: EdgeInsets.all(5),
+                  padding: EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      border: Border.all(color: Colors.blueGrey.shade500)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Column(
+                        children: [
+                          Text("Price",
+                              style: TextStyle(
+                                  color: Colors.blueGrey.shade500,
+                                  fontSize: 17)),
+                          SizedBox(
+                            height: 7,
+                          ),
+                          Text("\u{20B9} $price",
+                              style: TextStyle(
+                                  color: Colors.blueGrey.shade500,
+                                  fontSize: 17)),
+                        ],
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Column(
+                        children: [
+                          Text("Quantity",
+                              style: TextStyle(
+                                  color: Colors.blueGrey.shade500,
+                                  fontSize: 17)),
+                          SizedBox(
+                            height: 7,
+                          ),
+                          Text(quantity.toString(),
+                              style: TextStyle(
+                                  color: Colors.blueGrey.shade500,
+                                  fontSize: 17)),
+                        ],
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      DottedLine(
+                        lineLength: 10 + 17 + 17,
+                        direction: Axis.vertical,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Column(
+                        children: [
+                          Text("Total",
+                              style: TextStyle(
+                                  color: Colors.blueGrey.shade500,
+                                  fontSize: 17)),
+                          SizedBox(
+                            height: 7,
+                          ),
+                          Text("\u{20B9} ${quantity * price}",
+                              style: TextStyle(
+                                  color: Colors.blueGrey.shade500,
+                                  fontSize: 17)),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            ]),
           ),
-          Positioned(
-            left: MediaQuery.of(context).size.width * 0.95 * 0.04,
-            bottom: MediaQuery.of(context).size.height * 0.3 * 0.15,
-            width: MediaQuery.of(context).size.width * 0.95 * 0.92,
-            child: Container(
-              margin: EdgeInsets.all(5),
-              padding: EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                  border: Border.all(color: Colors.blueGrey.shade500)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Column(
-                    children: [
-                      Text("Price",
-                          style: TextStyle(
-                              color: Colors.blueGrey.shade500, fontSize: 17)),
-                      SizedBox(
-                        height: 7,
-                      ),
-                      Text("\u{20B9} $price",
-                          style: TextStyle(
-                              color: Colors.blueGrey.shade500, fontSize: 17)),
-                    ],
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Column(
-                    children: [
-                      Text("Quantity",
-                          style: TextStyle(
-                              color: Colors.blueGrey.shade500, fontSize: 17)),
-                      SizedBox(
-                        height: 7,
-                      ),
-                      Text(quantity.toString(),
-                          style: TextStyle(
-                              color: Colors.blueGrey.shade500, fontSize: 17)),
-                    ],
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  DottedLine(
-                    lineLength: 10 + 17 + 17,
-                    direction: Axis.vertical,
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Column(
-                    children: [
-                      Text("Total",
-                          style: TextStyle(
-                              color: Colors.blueGrey.shade500, fontSize: 17)),
-                      SizedBox(
-                        height: 7,
-                      ),
-                      Text("\u{20B9} ${quantity * price}",
-                          style: TextStyle(
-                              color: Colors.blueGrey.shade500, fontSize: 17)),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          )
-        ]),
+        ),
       ),
     );
   }
