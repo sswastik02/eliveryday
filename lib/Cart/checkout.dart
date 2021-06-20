@@ -224,8 +224,8 @@ class CheckOutPageState extends State<CheckOutPage> {
             )),
         child: Stack(children: [
           Positioned(
-            top: 20,
-            left: 10,
+            top: MediaQuery.of(context).size.height * 0.3 * 0.15,
+            left: MediaQuery.of(context).size.width * 0.95 * 0.05,
             width: MediaQuery.of(context).size.width * 0.95 * 0.85,
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
@@ -237,7 +237,7 @@ class CheckOutPageState extends State<CheckOutPage> {
           ),
           Positioned(
             left: MediaQuery.of(context).size.width * 0.95 * 0.04,
-            bottom: 15,
+            bottom: MediaQuery.of(context).size.height * 0.3 * 0.15,
             width: MediaQuery.of(context).size.width * 0.95 * 0.92,
             child: Container(
               margin: EdgeInsets.all(5),
