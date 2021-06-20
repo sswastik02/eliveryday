@@ -26,7 +26,7 @@ class CartState extends State<Cart> {
       ),
       child: Stack(
         children: [
-          clearButton(context),
+          (cartAllInfo.length != 0) ? clearButton(context) : Container(),
           cartdisplay(context),
           (cartAllInfo.length == 0) ? emptyCart() : checkoutButton(context),
         ],
@@ -100,7 +100,7 @@ class CartState extends State<Cart> {
               await Navigator.push(context,
                   MaterialPageRoute(builder: (context) {
                 return Scaffold(
-                  body: CheckoutPage(widget._auth),
+                  body: CheckOutPage(widget._auth),
                 );
               }));
               // awaiting for if the address changes and then setting state of home route which contains appbar

@@ -16,6 +16,8 @@ class OrderCard extends StatefulWidget {
 }
 
 class OrderCardState extends State<OrderCard> {
+  double previousDuration = -1;
+  double previousDistance = -1;
   Timer? timer;
 
   void initState() {
@@ -65,15 +67,19 @@ class OrderCardState extends State<OrderCard> {
     String dateTimeString = widget.cartInfo.id.replaceFirst(currentUser.id, "");
     DateTime dateTime = DateTime.parse(dateTimeString); // Order Time
     double duration = -1;
+    double distance = -1;
     int timePassed = -1;
     return FutureBuilder(
         future: showOrderOnMap.routeInfo.getData(),
         builder: (context, snapshot) {
           duration = showOrderOnMap.routeInfo.duration();
+          distance = showOrderOnMap.routeInfo.distance();
           timePassed = DateTime.now().difference(dateTime).inSeconds;
           // print(timePassed);
           // print(duration);
           print(duration - timePassed);
+          print(duration);
+          print(distance);
           print(currentUser.cartIds);
           if (snapshot.hasData) {
             if (timePassed > duration && duration >= 0) {
@@ -86,8 +92,14 @@ class OrderCardState extends State<OrderCard> {
                             widget.state?.setState(() {});
                           }));
                 });
-              } catch (e) {}
+              } catch (e) {
+                print(e.toString());
+              }
             }
+            duration = (duration > 0) ? duration : previousDuration;
+            distance = (distance > 0) ? distance : previousDistance;
+            previousDuration = duration;
+            previousDistance = distance;
 
             return Container(
               width: MediaQuery.of(context).size.width * 0.9,
@@ -147,7 +159,7 @@ class OrderCardState extends State<OrderCard> {
                                       color: Colors.white,
                                     ),
                                     Text(
-                                        " : ${(showOrderOnMap.routeInfo.distance() / 1000).abs().toStringAsPrecision(2)} Km ",
+                                        " : ${(distance / 1000).abs().toStringAsPrecision(2)} Km ",
                                         style: TextStyle(
                                             color: Colors.white, fontSize: 18)),
                                   ],
