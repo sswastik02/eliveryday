@@ -34,6 +34,7 @@ Future<void> main() async {
 
 class MyApp extends StatefulWidget {
   FirebaseUser? user;
+  User? profile;
 
   // This widget is the root of your application.
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -46,10 +47,15 @@ class MyAppState extends State<MyApp> {
 
   Future<bool> initialCheck() async {
     widget.user = await widget._auth.currentUser();
+
     if (widget.user == null) return false;
 
-    currentUser =
+    widget.profile =
         await widget.fireStoreService.getUserProfile(widget.user!.uid);
+
+    if (widget.profile!.fullName == '') return false;
+
+    currentUser = widget.profile!;
 
     return true;
   }

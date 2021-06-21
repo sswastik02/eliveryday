@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'FoodCard.dart';
 
-Widget photoAndTitle(String photo, String title, String address,
-    String imagesPath, double rating) {
+Widget photoAndTitle(BuildContext context, String photo, String title,
+    String address, String imagesPath, double rating) {
   return Row(
     children: [
       SizedBox(
@@ -12,8 +12,8 @@ Widget photoAndTitle(String photo, String title, String address,
       ClipRRect(
         // Image
         child: Container(
-          width: 100,
-          height: 100,
+          width: MediaQuery.of(context).size.width * 0.8 * 0.3,
+          height: MediaQuery.of(context).size.width * 0.8 * 0.3,
           child: Image.asset(
             imagesPath + photo,
             fit: BoxFit.fill,
@@ -26,7 +26,7 @@ Widget photoAndTitle(String photo, String title, String address,
       ),
       Container(
         // Scrollable Resturant Name Location and Rating
-        width: 230,
+        width: MediaQuery.of(context).size.width * 0.8 * 0.7,
         height: 100,
         //alignment: Alignment.center, Error causing in space
         child: SingleChildScrollView(

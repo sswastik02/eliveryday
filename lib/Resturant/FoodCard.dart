@@ -90,9 +90,9 @@ class FoodCardTemplateState extends State<FoodCardTemplate> {
             ),
             Positioned(
               //NAME
-              left: MediaQuery.of(context).size.width * 0.35,
+              left: MediaQuery.of(context).size.height * 0.2,
               top: MediaQuery.of(context).size.height * 0.025,
-              width: MediaQuery.of(context).size.width * 0.7,
+              width: MediaQuery.of(context).size.width * 0.6,
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Text(
@@ -106,7 +106,7 @@ class FoodCardTemplateState extends State<FoodCardTemplate> {
             ),
             Positioned(
               // DESCRIPTION
-              left: MediaQuery.of(context).size.width * 0.35,
+              left: MediaQuery.of(context).size.height * 0.2,
               top: MediaQuery.of(context).size.height * 0.07,
               width: MediaQuery.of(context).size.width * 0.6,
               height: 41,
@@ -127,7 +127,7 @@ class FoodCardTemplateState extends State<FoodCardTemplate> {
             Positioned(
               //PRICE
               bottom: 13,
-              left: MediaQuery.of(context).size.width * 0.35,
+              left: MediaQuery.of(context).size.height * 0.2,
               width: MediaQuery.of(context).size.width * 0.28,
               child: Container(
                 padding: EdgeInsets.all(5),

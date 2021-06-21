@@ -38,7 +38,7 @@ class ResturantCard extends StatelessWidget {
           child: FittedBox(
             fit: BoxFit.fitWidth,
             child: photoAndTitle(
-                image, resturantTitle, address, imagesPath, rating),
+                context, image, resturantTitle, address, imagesPath, rating),
           ),
         ),
       ),
