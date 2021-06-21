@@ -54,4 +54,4 @@ app.*.map.json
 
 upload-keystore.jks
 
-*.env #contains all keys
+.env
