@@ -230,7 +230,7 @@ class ShowOrderOnMapState extends State<ShowOrderOnMap> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  " Arriving in : ${(widget.routeInfo.duration() ~/ 60)} min ",
+                  " Total Time : ${(widget.routeInfo.duration() ~/ 60)} min ",
                   style: TextStyle(color: Colors.white, fontSize: 400),
                 ),
                 Text(

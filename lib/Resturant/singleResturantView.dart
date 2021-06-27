@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:eliveryday/Cart/cartInfo.dart';
+import 'package:eliveryday/FireBase/firebaseCustomServices.dart';
 import 'package:eliveryday/Home/base.dart';
 import 'package:eliveryday/Home/home.dart';
 import 'package:eliveryday/Maps/MapRoute.dart';
@@ -41,6 +42,7 @@ class ResturantViewState extends State<ResturantView> {
   late List<int> range;
   late Map<String, List<Food>> categories;
   late List<Food> categoryFoodItems;
+  FireStoreService fireStoreService = FireStoreService();
 
   @override
   void initState() {
@@ -83,14 +85,29 @@ class ResturantViewState extends State<ResturantView> {
               // ),
 
               Positioned(
+                // Top Image
                 top: 0,
                 height: MediaQuery.of(context).size.height * 0.4,
                 width: MediaQuery.of(context).size.width,
-                child: Image.asset(
-                  widget.imagesPath +
-                      widget.foodItems[widget.foodItems.length - 1].image,
-                  width: MediaQuery.of(context).size.width,
-                  fit: BoxFit.fill,
+                // child: Image.asset(
+                //   widget.imagesPath +
+                //       widget.foodItems[widget.foodItems.length - 1].image,
+                //   width: MediaQuery.of(context).size.width,
+                //   fit: BoxFit.fill,
+                // ),
+                child: FutureBuilder<String>(
+                  future: fireStoreService.getFoodImage(
+                      widget.foodItems[widget.foodItems.length - 1].image),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return Image.network(
+                        snapshot.data!,
+                        width: MediaQuery.of(context).size.width,
+                        fit: BoxFit.fill,
+                      );
+                    }
+                    return Image.asset(widget.imagesPath + 'defaultFood.jpeg');
+                  },
                 ),
               ),
               // Positioned(
@@ -99,6 +116,7 @@ class ResturantViewState extends State<ResturantView> {
               //   child: itemBar(),
               // ),
               Positioned(
+                // Card for resturant food & info
                 top: MediaQuery.of(context).size.height * 0.25,
                 left: 0,
                 // If width is 0.9 remaining is 0.1 hence moving by 0.05 will Center it

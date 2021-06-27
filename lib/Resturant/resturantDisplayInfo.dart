@@ -1,9 +1,11 @@
+import 'package:eliveryday/FireBase/firebaseCustomServices.dart';
 import 'package:flutter/material.dart';
 
 import 'FoodCard.dart';
 
 Widget photoAndTitle(BuildContext context, String photo, String title,
     String address, String imagesPath, double rating) {
+  FireStoreService fireStoreService = FireStoreService();
   return Row(
     children: [
       SizedBox(
@@ -14,9 +16,21 @@ Widget photoAndTitle(BuildContext context, String photo, String title,
         child: Container(
           width: MediaQuery.of(context).size.width * 0.8 * 0.3,
           height: MediaQuery.of(context).size.width * 0.8 * 0.3,
-          child: Image.asset(
-            imagesPath + photo,
-            fit: BoxFit.fill,
+          // child: Image.asset(
+          //   imagesPath + photo,
+          //   fit: BoxFit.fill,
+          // ),
+          child: FutureBuilder<String>(
+            future: fireStoreService.getRestuarantImage(photo),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Image.network(
+                  snapshot.data!,
+                  fit: BoxFit.fill,
+                );
+              }
+              return Image.asset(imagesPath + 'defaultResturant.jpg');
+            },
           ),
         ),
         borderRadius: BorderRadius.circular(10),

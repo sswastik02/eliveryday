@@ -1,4 +1,5 @@
 import 'package:eliveryday/Cart/cartInfo.dart';
+import 'package:eliveryday/FireBase/firebaseCustomServices.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -23,6 +24,30 @@ class Food {
     required this.category,
     required this.resturantCord,
   });
+  Map<String, dynamic> toJSON() {
+    return {
+      "foodItemName": foodItemName,
+      "measureByPieces": measureByPieces,
+      "image": image,
+      "pricePerMeasure": pricePerMeasure,
+      "description": description,
+      "veg": veg,
+      "resturantCord": [resturantCord.latitude, resturantCord.longitude],
+      "category": category,
+    };
+  }
+
+  Food.fromJSON(Map<String, dynamic> data)
+      : foodItemName = data['foodItemName'],
+        measureByPieces = data['measureByPieces'],
+        image = data['image'],
+        pricePerMeasure = data['pricePerMeasure'],
+        description = data['description'],
+        veg = data['veg'],
+        resturantCord =
+            LatLng(data['resturantCord'][0], data['resturantCord'][1]),
+        category = List.from(data['category']),
+        quantity = 0;
 }
 
 class FoodCardTemplate extends StatefulWidget {
@@ -58,6 +83,7 @@ class FoodCardTemplateState extends State<FoodCardTemplate> {
 
   @override
   Widget build(BuildContext context) {
+    FireStoreService fireStoreService = FireStoreService();
     return Container(
       margin: EdgeInsets.only(top: 5, bottom: 5),
       height: MediaQuery.of(context).size.height * 0.23,
@@ -79,10 +105,24 @@ class FoodCardTemplateState extends State<FoodCardTemplate> {
                   child: Container(
                     height: MediaQuery.of(context).size.height * 0.18,
                     width: MediaQuery.of(context).size.height * 0.18,
-                    child: Image.asset(
-                      widget.imagesPath + widget.foodData.image,
-                      fit: BoxFit.fill,
-                      // Aspect Ratio is not maintained
+                    // child: Image.asset(
+                    //   widget.imagesPath + widget.foodData.image,
+                    //   fit: BoxFit.fill,
+                    //   // Aspect Ratio is not maintained
+                    // ),
+                    child: FutureBuilder<String>(
+                      future:
+                          fireStoreService.getFoodImage(widget.foodData.image),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return Image.network(
+                            snapshot.data!,
+                            fit: BoxFit.fill,
+                          );
+                        }
+                        return Image.asset(
+                            widget.imagesPath + 'defaultFood.jpeg');
+                      },
                     ),
                   ),
                 ),

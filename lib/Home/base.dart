@@ -9,6 +9,7 @@ import 'package:eliveryday/customAppBar.dart';
 import 'package:eliveryday/Orders/orders.dart';
 import 'package:eliveryday/customBottomNavigationBar.dart';
 import 'package:eliveryday/profile.dart';
+import 'package:eliveryday/search.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -38,6 +39,7 @@ class HomeRouteState extends State<HomeRoute> {
   Widget build(BuildContext context) {
     List<Widget> _children = [
       Home(),
+      Search(),
       Cart(
         widget._auth,
         state: this,

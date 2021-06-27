@@ -18,6 +18,27 @@ class SingleResturantInfo {
       required this.resturantCord,
       required this.address,
       required this.rating});
+
+  Map<String, dynamic> toJSON() {
+    return {
+      "name": name,
+      "image": image,
+      "resturantCord": [resturantCord.latitude, resturantCord.longitude],
+      "address": address,
+      "rating": rating,
+      "foodlist": List<dynamic>.from(foodList.map((food) => food.toJSON())),
+    };
+  }
+
+  SingleResturantInfo.fromJSON(Map<String, dynamic> data)
+      : name = data['name'],
+        image = data['image'],
+        resturantCord =
+            LatLng(data['resturantCord'][0], data['resturantCord'][1]),
+        address = data['address'],
+        rating = data['rating'],
+        foodList = List<Food>.from(data["foodlist"]
+            .map((x) => Food.fromJSON(Map<String, dynamic>.from(x))));
 }
 
 List<SingleResturantInfo> resturanAllInfo = [
@@ -158,6 +179,8 @@ List<SingleResturantInfo> resturanAllInfo = [
       address: "JP Nagar, BLR",
       rating: 4.9),
 ];
+
+List<SingleResturantInfo> resturantDownloadedInfo = [];
 
 Map<String, IconData> foodCategories = {
   "Indian": FontAwesomeIcons.rupeeSign,

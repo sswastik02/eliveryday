@@ -1,6 +1,7 @@
 import 'package:eliveryday/Cart/checkout.dart';
 import 'package:eliveryday/FireBase/firebaseCustomServices.dart';
 import 'package:eliveryday/FireBase/phoneauth.dart';
+import 'package:eliveryday/Home/base.dart';
 import 'package:eliveryday/Resturant/FoodCard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,7 @@ import '../Cart/cartInfo.dart';
 
 class Cart extends StatefulWidget {
   final FirebaseAuth _auth;
-  State? state;
+  HomeRouteState? state;
   Cart(this._auth, {this.state});
   CartState createState() => CartState();
 }
@@ -36,7 +37,7 @@ class CartState extends State<Cart> {
 
   Widget emptyCart() {
     return Positioned(
-      top: MediaQuery.of(context).size.height * 0.3,
+      top: MediaQuery.of(context).size.height * 0.25,
       left: MediaQuery.of(context).size.width * 0.025,
       width: MediaQuery.of(context).size.width * 0.95,
       child: Column(
@@ -56,6 +57,25 @@ class CartState extends State<Cart> {
               ),
             ),
           ),
+          Container(
+            margin: EdgeInsets.only(top: 20),
+            width: MediaQuery.of(context).size.width * 0.8,
+            child: MaterialButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10),
+                    ),
+                    side: BorderSide(color: Colors.teal.shade500)),
+                textColor: Colors.teal.shade500,
+                padding: EdgeInsets.all(10),
+                onPressed: () {
+                  widget.state?.onTabTapped(0);
+                },
+                child: Text(
+                  "Browse Restuarants",
+                  style: TextStyle(fontSize: 20),
+                )),
+          )
         ],
       ),
     );
