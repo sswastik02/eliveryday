@@ -62,6 +62,9 @@ class SearchState extends State<Search> {
                         display = true;
                       });
                     },
+                    onChanged: (text) {
+                      display = true;
+                    },
                     decoration: InputDecoration(
                         hintText: "Search Restuarants",
                         prefixIcon: Icon(Icons.search),
@@ -133,31 +136,42 @@ class SearchState extends State<Search> {
                                                   SizedBox(
                                                     height: 10,
                                                   ),
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      SizedBox(
-                                                          width: MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width *
-                                                              0.4,
-                                                          child: Text(search)),
-                                                      MaterialButton(
-                                                        onPressed: () {
-                                                          setState(() {
-                                                            searchHistory
-                                                                .remove(search);
-                                                          });
-                                                        },
-                                                        child: Icon(
-                                                          Icons.close,
-                                                          color: Colors.black,
-                                                        ),
-                                                      )
-                                                    ],
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      setState(() {
+                                                        controller.text =
+                                                            search;
+                                                        display = true;
+                                                      });
+                                                    },
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        SizedBox(
+                                                            width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.4,
+                                                            child:
+                                                                Text(search)),
+                                                        MaterialButton(
+                                                          onPressed: () {
+                                                            setState(() {
+                                                              searchHistory
+                                                                  .remove(
+                                                                      search);
+                                                            });
+                                                          },
+                                                          child: Icon(
+                                                            Icons.close,
+                                                            color: Colors.black,
+                                                          ),
+                                                        )
+                                                      ],
+                                                    ),
                                                   ),
                                                   SizedBox(
                                                     height: 10,
