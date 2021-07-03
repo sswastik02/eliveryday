@@ -143,10 +143,11 @@ class ShowOrderOnMapState extends State<ShowOrderOnMap> {
                 color: Colors.teal.shade500,
               ),
             ),
-            Positioned(
+            AnimatedPositioned(
               bottom: arrowUp
                   ? -1 * MediaQuery.of(context).size.height * 0.5 * 0.85
                   : 5,
+              duration: Duration(milliseconds: 500),
               left: MediaQuery.of(context).size.width * (1 - 0.7) / 2,
               child: ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(25)),

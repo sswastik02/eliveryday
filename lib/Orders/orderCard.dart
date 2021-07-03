@@ -25,7 +25,7 @@ class OrderCardState extends State<OrderCard> {
   void initState() {
     super.initState();
     setState(() {
-      const oneSecond = const Duration(seconds: 25);
+      const oneSecond = const Duration(seconds: 5);
       timer = (widget.currentOrder)
           ? new Timer.periodic(oneSecond, (Timer t) => setState(() {}))
           : null;
@@ -143,7 +143,7 @@ class OrderCardState extends State<OrderCard> {
                                     Icon(Icons.access_time,
                                         color: Colors.white),
                                     Text(
-                                      ((duration - timePassed) ~/ 60 > 1)
+                                      ((duration - timePassed) ~/ 60 >= 1)
                                           ? "  : ${((duration - timePassed) ~/ 60).abs()} min "
                                           : "  : < 1 min  ",
                                       style: TextStyle(
