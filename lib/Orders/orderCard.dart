@@ -319,8 +319,7 @@ class OrderCardState extends State<OrderCard> {
                             SizedBox(
                               width: 10,
                             ),
-                            Text(
-                                widget.cartInfo.foodList[0].quantity.toString(),
+                            Text(food.quantity.toString(),
                                 style: TextStyle(
                                     color: Colors.blueGrey.shade500,
                                     fontSize: 17)),
